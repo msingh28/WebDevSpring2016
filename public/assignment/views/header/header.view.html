@@ -1,11 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="HeaderController">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -18,13 +12,11 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="../users/register.view.html">Register</a></li>
-                <li><a href="../users/login.view.html">Login</a></li>
-                <li><a href="#">Username</a></li>
-                <li><a href="#">Logout</a></li>
+                <li ng-class="{'active' : $location.url() == '/register'}"><a href="#/register">Register</a></li>
+                <li ng-class="{'active' : $location.url() == '/login'}"><a href="#/login">Login</a></li>
+                <li ng-class="{'active' : $location.url() == '/home'}"><a href="#">Username</a></li>
+                <li ng-class="{'active' : $location.url() == '/home'}"><a href="#">Logout</a></li>
             </ul>
         </div>
     </div>
 </nav>
-</body>
-</html>
