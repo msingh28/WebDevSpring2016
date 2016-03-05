@@ -1,3 +1,17 @@
-/**
- * Created by monis on 3/3/2016.
- */
+"use strict";
+
+(function(){
+    angular
+        .module("FormBuilderApp")
+        .controller("RegisterController", RegisterController);
+
+    function RegisterController($rootScope, $scope, $location, UserService) {
+        $scope.register = function(user) {
+            UserService.createUser(user,
+                function(response){
+                    $rootScope.currentUser = response;
+                });
+            $location.path('/profile');
+        }
+    }
+})();
