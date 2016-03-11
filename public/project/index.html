@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="NextReadHuntApp">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Form Maker</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 </head>
-<body>
-<h1>Project</h1>
+<body ng-controller="MainController" background="http://orig01.deviantart.net/e2dd/f/2015/011/e/a/33_crinkled_paper_background_lrg_by_misaki_takato-d8dh61o.jpg">
+    <div ng-include="'views/header/header.view.html'"></div>
+    <div class="container-fluid">
+
+            <div ng-view></div>
+    </div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular-route.js"></script>
+<script src="app.js"></script>
+<script src="config.js"></script>
+<script src="views/main/main.controller.js"></script>
+<script src="views/header/header.controller.js"></script>
+<script src="services/user.service.client.js"></script>
+<script src="views/users/register.controller.js"></script>
+<script src="views/users/profile.controller.js"></script>
+<script src="views/users/login.controller.js"></script>
+<script src="services/forms.service.client.js"></script>
+<script src="views/forms/forms.controller.js"></script>
+<script src="services/omdbapi.service.js"></script>
+<script src="views/navigation/navigation.controller.js"></script>
+<script src="views/search/search.controller.js"></script>
+<script src="views/search/detail.controller.js"></script>
 </body>
 </html>

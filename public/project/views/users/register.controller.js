@@ -1,0 +1,17 @@
+"use strict";
+
+(function(){
+    angular
+        .module("NextReadHuntApp")
+        .controller("RegisterController", RegisterController);
+
+    function RegisterController($rootScope, $scope, $location, UserService) {
+        $scope.register = function(user) {
+            UserService.createUser(user,
+                function(response){
+                    $rootScope.currentUser = response;
+                });
+            $location.path('/profile');
+        }
+    }
+})();
