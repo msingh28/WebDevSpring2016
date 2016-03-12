@@ -1,5 +1,13 @@
 <!DOCTYPE html>
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="ProfileController">
+<div  ng-controller="ProfileController">
+    <nav ng-controller="NavController">
+        <ul class="nav nav-tabs">
+            <li ng-class="{'active': $location.url() == '/profile'}"><a href="#/profile">Profile</a></li>
+            <li ng-class="{'active': $location.url() == '/books'}"><a href="#/books">Books</a></li>
+            <li ng-class="{'active': $location.url() == '/following'}"><a href="#/following">Following</a></li>
+            <li ng-class="{'active': $location.url() == '/reviews'}"><a href="#/reviews">Reviews</a></li>
+        </ul>
+    </nav>
     <h1 class="page-header">Profile</h1>
     <form class="form-horizontal">
         <div class="form-group">

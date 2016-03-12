@@ -18,10 +18,9 @@
     <link href="css/dashboard.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
-<body ng-controller="MainController" background="http://orig01.deviantart.net/e2dd/f/2015/011/e/a/33_crinkled_paper_background_lrg_by_misaki_takato-d8dh61o.jpg">
+<body ng-controller="MainController" >
     <div ng-include="'views/header/header.view.html'"></div>
     <div class="container-fluid">
-
             <div ng-view></div>
     </div>
 <!-- Bootstrap core JavaScript
@@ -39,11 +38,17 @@
 <script src="views/users/register.controller.js"></script>
 <script src="views/users/profile.controller.js"></script>
 <script src="views/users/login.controller.js"></script>
-<script src="services/forms.service.client.js"></script>
-<script src="views/forms/forms.controller.js"></script>
-<script src="services/omdbapi.service.js"></script>
+<script src="services/googlebooksapi.service.js"></script>
 <script src="views/navigation/navigation.controller.js"></script>
 <script src="views/search/search.controller.js"></script>
 <script src="views/search/detail.controller.js"></script>
+<script src="views/books/books.view.html"></script>
+<script src="views/reviews/reviews.view.html"></script>
+<script src="views/following/following.view.html"></script>
+<script src="views/following/following.controller.js"></script>
+<script src="views/books/books.controller.js"></script>
+<script src="services/books.services.client.js"></script>
+<script src="services/reviews.services.client.js"></script>
+<script src="views/reviews/reviews.controller.js"></script>
 </body>
 </html>

@@ -23,13 +23,6 @@
                 .when("/admin", {
                     templateUrl: "views/admin/admin.view.html"
                 })
-                .when("/forms", {
-                    templateUrl: "views/forms/forms.view.html",
-                    controller: "FormController"
-                })
-                .when("/fields",{
-                    templateUrl: "views/forms/form-fields.view.html"
-                })
                 .when("/search", {
                     templateUrl: "views/search/search.view.html",
                     controller: "SearchController"
@@ -41,6 +34,18 @@
                 .when("/detail/:id", {
                     templateUrl: "views/search/detail.view.html",
                     controller: "DetailController"
+                })
+                .when("/books", {
+                    templateUrl: "views/books/books.view.html",
+                    controller: "BooksController"
+                })
+                .when("/following", {
+                    templateUrl: "views/following/following.view.html",
+                    controller: "FollowingController"
+                })
+                .when("/reviews", {
+                    templateUrl: "views/reviews/reviews.view.html",
+                    controller: "ReviewsController"
                 })
                 .otherwise({
                     redirectTo: "/home"

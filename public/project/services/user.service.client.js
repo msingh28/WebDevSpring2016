@@ -12,15 +12,15 @@
 
         users = [
             {	"_id":123, "firstName":"Alice",            "lastName":"Wonderland",            "following":[234, 345],
-                "username":"alice",  "password":"alice",   "roles": ["user"],                  "books":[111, 222]		},
+                "username":"alice",  "password":"alice",   "roles": ["user"]		},
             {	"_id":234, "firstName":"Bob",              "lastName":"Hope",                   "following":[345],
-                "username":"bob",    "password":"bob",     "roles": ["admin"],                  "books":[111, 222]		},
+                "username":"bob",    "password":"bob",     "roles": ["admin"]	},
             {	"_id":345, "firstName":"Charlie",          "lastName":"Brown",                  "following":[456],
-                "username":"charlie","password":"charlie", "roles": ["user"],                   "books":[222]		},
+                "username":"charlie","password":"charlie", "roles": ["user"]    },
             {	"_id":456, "firstName":"Dan",              "lastName":"Craig",                  "following":[],
-                "username":"dan",    "password":"dan",     "roles": ["user", "admin"],          "books":[111, 222]},
+                "username":"dan",    "password":"dan",     "roles": ["user", "admin"]   },
             {	"_id":567, "firstName":"Edward",           "lastName":"Norton",                 "following":[456],
-                "username":"ed",     "password":"ed",      "roles": ["user"],                   "books":[333]		}
+                "username":"ed",     "password":"ed",      "roles": ["user"]       }
         ];
 
         var service = {
@@ -28,7 +28,11 @@
             findUserByCredentials:findUserByCredentials,
             createUser : createUser,
             deleteUserById : deleteUserById,
-            updateUser : updateUser
+            updateUser : updateUser,
+            findAllFollowing : findAllFollowing,
+            findUserByUserId : findUserByUserId,
+            addFollower : addFollower,
+            deleteFollowingById : deleteFollowingById
         };
 
         return service;
@@ -71,6 +75,71 @@
                 }
             }
             callback(updatedUser);
+        }
+
+        function findAllFollowing(userId, callback) {
+            var userFollowing = [];
+            for(var i=0; i < users.length; i++) {
+                if(users[i]._id == userId){
+                    var followinglist = users[i].following;
+                    console.log(followinglist);
+                    for(var j=0; j<followinglist.length; j++) {
+                        console.log(followinglist[j]);
+                        var following = findUserByUserId(followinglist[j]);
+                        userFollowing.push(following);
+                    }
+                }
+            }
+            callback(userFollowing);
+        }
+
+        function findUserByUserId(userId) {
+            console.log("I am here");
+            console.log(userId);
+            var user = null;
+            for(var i=0; i < users.length; i++){
+                if(users[i]._id == userId){
+                    user = users[i];
+                }
+            }
+            console.log(user);
+            return user;
+        }
+
+        function addFollower(userId, follower, callback) {
+            var followerObject = null;
+            for(var i=0; i < users.length; i++){
+                if(users[i].username == follower){
+                    followerObject = users[i];
+                    for(var j=0; j<users.length;j++ ){
+                        if(users[j]._id == userId){
+                            users[j].following.push(followerObject._id);
+                            console.log("New follower list");
+                            console.log(users[j].following);
+                        }
+                    }
+                }
+            }
+            console.log("in function");
+            console.log(followerObject);
+            callback(followerObject);
+        }
+
+        function deleteFollowingById(userId, followerId, callback) {
+            var followerList=[];
+            for (var i = 0; i < users.length; i++) {
+
+                if (users[i]._id == userId) {
+
+                    followerList = users[i].following;
+                    for (var j = 0; j < followerList.length; j++) {
+                        if (followerList[j] == followerId) {
+                            users[i].following.splice(j, 1);
+                        }
+                    }
+                }
+                callback(followerList);
+            }
         }
     }
 })();
