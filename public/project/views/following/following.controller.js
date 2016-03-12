@@ -25,7 +25,9 @@
                 currentFollower = $scope.followerId;
                 UserService.addFollower($rootScope.currentUser._id, currentFollower,
                     function(response){
-                        $scope.following.push(response);
+                        if(response!=null) {
+                            $scope.following.push(response);
+                        }
                     });
                 $scope.followerId = null;
                 currentFollower = null;
