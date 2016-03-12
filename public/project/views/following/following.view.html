@@ -19,16 +19,14 @@
             </tr>
             <tr>
                 <td><div class="input-group"><input type="text" ng-model="followerId" class="form-control"  placeholder="name"></div></td>
-                <td><span ng-class="disable ? 'glyphicon glyphicon-plus iconButton' :  'glyphicon glyphicon-plus link-disable iconButton'" ng-click="disable && addFollower()"></span>&nbsp&nbsp&nbsp&nbsp&nbsp
-
+                <td><span ng-class="disable ? 'glyphicon glyphicon-plus iconButton' :  'glyphicon glyphicon-plus link-disable iconButton'" ng-click="disable && addFollower()"></span>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="user in following" ng-class="{'success' : $index == selectedFormIndex}">
                 <td>{{user.username}}</td>
                 <td>
-                    <span class="glyphicon glyphicon-remove iconButton" ng-click="deleteFollower($index)"></span>&nbsp&nbsp&nbsp&nbsp&nbsp
-
+                    <span class="glyphicon glyphicon-remove iconButton" ng-click="deleteFollower($index)"></span>
                 </td>
             </tr>
             </tbody>

@@ -18,8 +18,7 @@
         var service = {
             addBook: addBook,
             findAllBooks: findAllBooks,
-            deleteBookById: deleteBookById,
-            updateFormById: updateFormById
+            deleteBookById: deleteBookById
         };
 
         return service;
@@ -48,17 +47,6 @@
                 }
             }
             callback(books);
-        }
-
-        function updateFormById(formId, newForm, callback) {
-            var temp = null;
-            for (var i = 0; i < forms.length; i++) {
-                if (forms[i]._id == formId) {
-                    forms[i] = newForm;
-                    temp =  forms[i];
-                }
-            }
-            callback(temp);
         }
     }
 })();

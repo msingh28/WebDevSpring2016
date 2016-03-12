@@ -14,7 +14,6 @@
                 function (response) {
                     $scope.following = response;
                 });
-            console.log($scope.following);
         }
 
         $scope.selectedFormIndex = null;
@@ -23,11 +22,9 @@
 
         $scope.addFollower = function() {
             if($scope.followerId!=null) {
-                 currentFollower = $scope.followerId;
+                currentFollower = $scope.followerId;
                 UserService.addFollower($rootScope.currentUser._id, currentFollower,
                     function(response){
-                        console.log("followerResponse");
-                        console.log(response);
                         $scope.following.push(response);
                     });
                 $scope.followerId = null;
