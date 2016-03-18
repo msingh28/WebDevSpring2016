@@ -1,7 +1,6 @@
 "use strict";
 
-(function()
-{
+(function() {
     angular
         .module("FormBuilderApp")
         .controller("FormController", FormController);
@@ -10,8 +9,8 @@
         $scope.forms = [];
 
         if($rootScope.currentUser != null) {
-            FormService.findAllFormsForUser($rootScope.currentUser._id,
-                function (response) {
+            FormService.findAllFormsForUser($rootScope.currentUser._id)
+                .then(function (response) {
                     $scope.forms = response;
                 });
         }
@@ -23,8 +22,8 @@
         $scope.addForm = function() {
             if($scope.formName!=null) {
                 currentForm.title = $scope.formName;
-                FormService.createFormForUser($rootScope.currentUser._id, currentForm,
-                    function(response){
+                FormService.createFormForUser($rootScope.currentUser._id, currentForm)
+                    .then(function(response){
                         $scope.forms.push(response);
                     });
                 $scope.formName = null;
@@ -36,8 +35,8 @@
             if($scope.formName!=null) {
                 currentForm = $scope.forms[$scope.selectedFormIndex];
                 currentForm.title = $scope.formName;
-                FormService.updateFormById(currentForm._id, currentForm,
-                    function (response){
+                FormService.updateFormById(currentForm._id, currentForm)
+                    .then(function (response){
                         $scope.forms[$scope.selectedFormIndex] = response;
                     });
                 currentForm = {};
@@ -49,8 +48,8 @@
 
         $scope.deleteForm = function(index) {
             currentForm = $scope.forms[index];
-            FormService.deleteFormById(currentForm._id,
-                function(response){
+            FormService.deleteFormById(currentForm._id)
+                .then(function(response){
                     $scope.forms.splice(index,1);
                 });
             $scope.selectedFormIndex = null;

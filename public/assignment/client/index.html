@@ -7,7 +7,6 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
     <title>Form Maker</title>
 
@@ -16,6 +15,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 <body ng-controller="MainController">
     <div ng-include="'views/header/header.view.html'"></div>
@@ -32,6 +32,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular-route.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js" integrity="sha256-DI6NdAhhFRnO2k51mumYeDShet3I8AKCQf/tf7ARNhI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.13.4/sortable.min.js"></script>
 <script src="app.js"></script>
 <script src="config.js"></script>
 <script src="views/main/main.controller.js"></script>
@@ -43,5 +45,7 @@
 <script src="views/users/login.controller.js"></script>
 <script src="services/forms.service.client.js"></script>
 <script src="views/forms/forms.controller.js"></script>
+<script src="services/field.service.client.js"></script>
+<script src="views/forms/field.controller.js"></script>
 </body>
 </html>
