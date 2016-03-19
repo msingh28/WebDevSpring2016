@@ -1,9 +1,10 @@
 "use strict";
 
-module.exports = function(app) {
+var uuid = require('node-uuid');
+
+module.exports = function() {
 
     var users = require("./user.mock.json");
-    var uuid = require('node-uuid');
 
     var api = {
         Create: Create,
