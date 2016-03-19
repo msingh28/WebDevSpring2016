@@ -8,8 +8,6 @@ module.exports = function(app, formModel) {
     app.put("/api/assignment/form/:formId/field/:fieldId", updateField);
     app.put("/api/assignment/form/:formId/field", RearrangeFields);
 
-
-
     function createField(req, res) {
         var formId = req.params.formId;
         var field = req.body;

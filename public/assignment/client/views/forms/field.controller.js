@@ -1,5 +1,6 @@
-(function()
-{
+"use strict";
+
+(function() {
     angular
         .module("FormBuilderApp")
         .controller("FieldsController", FieldsController);
@@ -8,8 +9,9 @@
 
         $scope.formId = $routeParams.formId;
         $scope.formTitle = $rootScope.currentUser.formName;
-        $scope.modalField = {};
         $scope.formFields = {};
+
+        $scope.dialog = {};
 
         $scope.fieldOptions = [
             "Single Line Text Field",
@@ -20,15 +22,58 @@
             "Radio Buttons Field"
         ];
 
-        if($rootScope.currentUser != null){
+        if($rootScope.currentUser != null) {
             FieldService.getFieldsForForm($scope.formId)
                 .then(function(fields){
                     $scope.formFields = fields;
                 });
         }
 
-        $scope.addField = function(fieldType){
+        $scope.deleteField = function(fieldId) {
+            FieldService.deleteFieldFromForm($scope.formId,fieldId)
+                .then(function(response){
+                    $scope.formFields = response;
+                });
+        }
 
+        $scope.cloneField = function(field) {
+            FieldService.createFieldForForm($scope.formId,field)
+                .then(function (response) {
+                    $scope.formFields = response;
+                });
+        }
+
+        $scope.editField = function(fieldId, fieldLabel) {
+            $scope.dialogFor = fieldLabel;
+            FieldService.getFieldForForm($scope.formId,fieldId)
+                .then(function(response){
+                    $scope.dialog = response;
+                    if(response.hasOwnProperty("options")) {
+                        $scope.dialog.options = JSON.stringify($scope.dialog.options).substr(1,JSON.stringify($scope.dialog.options).length-2);
+                    }
+                });
+        }
+
+        $scope.updateField = function(field) {
+            if(field.hasOwnProperty("options")){
+                field.options = JSON.parse(field.options);
+            }
+            FieldService.updateField($scope.formId, field._id, field)
+                .then(function(response){
+                    $scope.formFields = response;
+                });
+        }
+
+        $scope.$watch('formFields', function (newVal, oldVal) {
+            if(Object.keys(newVal).length !== 0 && Object.keys(oldVal).length !== 0 ){
+                FieldService.rearrangeFields($scope.formId, newVal)
+                    .then(function (response) {
+                        $scope.formFields = response;
+                    });
+            }
+        }, true);
+
+        $scope.addField = function(fieldType) {
             if(fieldType != null) {
                 var newField = {};
                 if (fieldType == "Single Line Text Field") {
@@ -74,55 +119,5 @@
                     })
             }
         }
-
-
-        $scope.deleteField = function(fieldId){
-            FieldService.deleteFieldFromForm($scope.formId,fieldId)
-                .then(function(response){
-                    $scope.formFields = response;
-                });
-        }
-
-
-        $scope.cloneField = function(field){
-            FieldService.createFieldForForm($scope.formId,field)
-                .then(function (response) {
-                    $scope.formFields = response;
-                });
-        }
-
-        $scope.editField = function(fieldId){
-            FieldService.getFieldForForm($scope.formId,fieldId)
-                .then(function(response){
-                    $scope.modalField = response;
-                    if(response.hasOwnProperty("options")) {
-                        $scope.modalField.options = JSON.stringify($scope.modalField.options);
-                    }
-                });
-        }
-
-        $scope.parseField = function(newfield){
-            if(newfield.hasOwnProperty("options")){
-                newfield.options = JSON.parse(newfield.options);
-            }
-            FieldService.updateField($scope.formId,newfield._id,newfield)
-                .then(function(response){
-                    $scope.formFields = response;
-                });
-        }
-
-
-        $scope.$watch('formFields', function (newValue, oldValue) {
-            if(Object.keys(newValue).length !== 0 && Object.keys(oldValue).length !== 0 ){
-                FieldService.rearrangeFields($scope.formId,newValue)
-                    .then(function (response) {
-                        $scope.formFields = response;
-                    });
-            }
-
-        }, true);
-
-
     }
-
 })();

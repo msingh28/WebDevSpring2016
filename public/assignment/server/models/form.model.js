@@ -121,21 +121,16 @@ module.exports = function() {
                     return Update(currentForm._id,currentForm).fields;
                 }
             }
-            return null;
         }
-        return null;
     }
 
     function CreateField(formId, field) {
         var currentForm = FindById(formId);
-        console.log(currentForm);
-        if(currentForm != null){
+        if(currentForm != null) {
             field._id = uuid.v1();
-            console.log(field._id);
             currentForm.fields.push(field);
             return Update(currentForm._id, currentForm).fields;
         }
-        return null;
     }
 
     function UpdateField(formId, fieldId, field) {
@@ -149,17 +144,14 @@ module.exports = function() {
                     return Update(currentForm._id, currentForm).fields;
                 }
             }
-            return null;
         }
-        return null;
     }
 
-    function RearrangeFields(formId, fields){
+    function RearrangeFields(formId, fields) {
         var currentForm = FindById(formId);
         if(currentForm != null){
             currentForm.fields = fields;
             return Update(currentForm._id,currentForm).fields;
         }
-        return null;
     }
 }

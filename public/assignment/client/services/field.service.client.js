@@ -6,8 +6,6 @@
         .factory("FieldService", FieldService);
 
     function FieldService($http,$q) {
-
-
         var service = {
             createFieldForForm: createFieldForForm,
             getFieldsForForm: getFieldsForForm,
@@ -65,13 +63,12 @@
         }
 
         function rearrangeFields(formId, fields){
-            var defer = $q.defer();
+            var deferred = $q.defer();
             var url = "/api/assignment/form/"+formId+"/field";
             $http.put(url, fields).success(function (response) {
-                defer.resolve(response);
+                deferred.resolve(response);
             });
-            return defer.promise;
+            return deferred.promise;
         }
     }
-
 })();

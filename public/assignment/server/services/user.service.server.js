@@ -7,7 +7,6 @@ module.exports = function(app, userModel) {
     app.put("/api/assignment/user/:id", updateUser);
     app.delete("/api/assignment/user/:id", deleteUser);
 
-
     function createUser(req, res) {
         var user = req.body;
         res.send(userModel.Create(user));

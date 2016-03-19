@@ -1,14 +1,11 @@
 "use strict";
 
-(function()
-{
+(function() {
     angular
         .module("FormBuilderApp")
         .factory("UserService", UserService);
 
-    function UserService($http, $q)
-    {
-
+    function UserService($http, $q) {
         var service = {
             findAllUsers : findAllUsers,
             findUserByCredentials:findUserByCredentials,
