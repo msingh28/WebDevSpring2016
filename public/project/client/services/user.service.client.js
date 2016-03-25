@@ -8,20 +8,6 @@
 
     function UserService()
     {
-        var users = [];
-
-        users = [
-            {	"_id":123, "firstName":"Alice",            "lastName":"Wonderland",            "following":[234, 345],
-                "username":"alice",  "password":"alice",   "roles": ["user"]		},
-            {	"_id":234, "firstName":"Bob",              "lastName":"Hope",                   "following":[345],
-                "username":"bob",    "password":"bob",     "roles": ["admin"]	},
-            {	"_id":345, "firstName":"Charlie",          "lastName":"Brown",                  "following":[456],
-                "username":"charlie","password":"charlie", "roles": ["user"]    },
-            {	"_id":456, "firstName":"Dan",              "lastName":"Craig",                  "following":[],
-                "username":"dan",    "password":"dan",     "roles": ["user", "admin"]   },
-            {	"_id":567, "firstName":"Edward",           "lastName":"Norton",                 "following":[456],
-                "username":"ed",     "password":"ed",      "roles": ["user"]       }
-        ];
 
         var service = {
             findAllUsers : findAllUsers,

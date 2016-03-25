@@ -1,0 +1,23 @@
+[
+  {
+    "_id": "000",
+    "rating": 3,
+    "bookId": "010",
+    "comments": "Excellent",
+    "userId": 123
+  },
+  {
+    "_id": "010",
+    "rating": 4,
+    "bookId": "000",
+    "comments": "Good",
+    "userId": 123
+  },
+  {
+    "_id": "020",
+    "rating": 3,
+    "bookId": "000",
+    "comments": "Excellent",
+    "userId": 234
+  }
+]

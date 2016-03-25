@@ -6,13 +6,6 @@
         .factory("BookService", BookService);
 
     function BookService() {
-        var books = [];
-
-        books = [
-            {"_id": "000", "title": "Harry Potter", "author": "J.K.R", "isbn": "isbn111", "userId": 123},
-            {"_id": "010", "title": "Lord Of The Rings",   "author": "J.R.R.T",  "isbn": "isbn123", "userId": 123},
-            {"_id": "020", "title": "The Da Vinci Code",   "author": "D.B.",  "isbn": "isbn234", "userId": 234}
-        ];
 
 
         var service = {
