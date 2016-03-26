@@ -10,8 +10,8 @@
         $scope.reviews = [];
 
         if($rootScope.currentUser != null) {
-            ReviewsService.findAllReviewsForUser($rootScope.currentUser._id,
-                function (response) {
+            ReviewsService.findAllReviewsForUser($rootScope.currentUser._id)
+                .then(function (response) {
                     $scope.reviews = response;
                 });
         }
@@ -25,8 +25,9 @@
                 currentReview.bookId = $scope.bookId;
                 currentReview.rating = $scope.rating;
                 currentReview.comments = $scope.comments;
-                ReviewsService.createReviewForUser($rootScope.currentUser._id, currentReview,
-                    function(response){
+                currentReview.userId = $rootScope.currentUser._id;
+                ReviewsService.createReviewForUser(currentReview)
+                    .then(function(response){
                         $scope.reviews.push(response);
                     });
                 $scope.bookId = null;
@@ -42,8 +43,8 @@
                 currentReview.bookId = $scope.bookId;
                 currentReview.rating = $scope.rating;
                 currentReview.comments = $scope.comments;
-                ReviewsService.updateReviewById(currentForm._id, currentReview,
-                    function (response){
+                ReviewsService.updateReviewById(currentReview._id, currentReview)
+                    .then(function (response){
                         $scope.reviews[$scope.selectedFormIndex] = response;
                     });
                 currentReview = {};
@@ -57,8 +58,8 @@
 
         $scope.deleteReview = function(index) {
             currentReview = $scope.reviews[index];
-            ReviewsService.deleteReviewById(currentReview._id,
-                function(response){
+            ReviewsService.deleteReviewById(currentReview._id)
+                .then(function(response){
                     $scope.reviews.splice(index,1);
                 });
             $scope.selectedFormIndex = null;

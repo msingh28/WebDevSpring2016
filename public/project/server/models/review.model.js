@@ -44,7 +44,7 @@ module.exports = function() {
     function Update(id, review) {
         for(var i=0; i < reviews.length; i++) {
             if(reviews[i]._id==id){
-                reviews[i] = user;
+                reviews[i] = review;
             }
         }
         return review;

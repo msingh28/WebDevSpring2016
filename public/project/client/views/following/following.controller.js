@@ -10,8 +10,8 @@
         $scope.following = [];
 
         if($rootScope.currentUser != null) {
-            UserService.findAllFollowing($rootScope.currentUser._id,
-                function (response) {
+            UserService.findAllFollowing($rootScope.currentUser._id)
+                .then(function (response) {
                     $scope.following = response;
                 });
         }
@@ -23,8 +23,8 @@
         $scope.addFollower = function() {
             if($scope.followerId!=null) {
                 currentFollower = $scope.followerId;
-                UserService.addFollower($rootScope.currentUser._id, currentFollower,
-                    function(response){
+                UserService.addFollower($rootScope.currentUser._id, currentFollower)
+                    .then(function(response){
                         if(response!=null) {
                             $scope.following.push(response);
                         }
@@ -36,8 +36,8 @@
 
         $scope.deleteFollower = function(index) {
             currentFollower = $scope.following[index];
-            UserService.deleteFollowingById($rootScope.currentUser._id, currentFollower._id,
-                function(response){
+            UserService.deleteFollowingById($rootScope.currentUser._id, currentFollower._id)
+                .then(function(response){
                     $scope.following.splice(index,1);
                 });
             $scope.selectedFormIndex = null;

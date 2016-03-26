@@ -2,8 +2,8 @@
 
 module.exports = function(app, reviewModel) {
     app.post("/api/project/review", createReview);
-    app.get("/api/project/review/:userId", getReviews);
-    app.get("/api/project/review:id", getReviewById);
+    app.get("/api/project/reviews/:userId", getReviews);
+    app.get("/api/project/review/:id", getReviewById);
     app.put("/api/project/review/:id", updateReview);
     app.delete("/api/project/review/:id", deleteReview);
 

@@ -5,7 +5,8 @@
         .module("NextReadHuntApp")
         .factory("ReviewsService", ReviewsService);
 
-    function ReviewsService() {
+    function ReviewsService($http, $q) {
+
         var service = {
             createReviewForUser: createReviewForUser,
             findAllReviewsForUser: findAllReviewsForUser,
@@ -15,41 +16,39 @@
 
         return service;
 
-        function createReviewForUser(userId, review, callback) {
-            review._id = (new Date).getTime();
-            review.userId = userId;
-            reviews.push(review);
-            callback(review);
+        function createReviewForUser(review) {
+            var deferred = $q.defer();
+            $http.post("/api/project/review", review)
+                .success(function (response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
+        function findAllReviewsForUser(userId) {
+            var deferred = $q.defer();
+            $http.get("/api/project/reviews/"+userId)
+                .success(function (response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
         }
 
-        function findAllReviewsForUser(userId, callback) {
-            var userReviews = [];
-            for(var i=0; i < reviews.length; i++) {
-                if(reviews[i].userId == userId){
-                    userReviews.push(reviews[i]);
-                }
-            }
-            callback(userReviews);
+        function deleteReviewById(reviewId) {
+            var deferred = $q.defer();
+            $http.delete("/api/project/review/"+reviewId)
+                .success(function (response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
         }
 
-        function deleteReviewById(reviewId, callback) {
-            for(var i=0; i < reviews.length; i++) {
-                if(reviews[i]._id == reviewId) {
-                    reviews.splice(i, 1);
-                }
-            }
-            callback(reviews);
-        }
-
-        function updateReviewById(reviewId, newReview, callback) {
-            var temp = null;
-            for (var i = 0; i < reviews.length; i++) {
-                if (reviews[i]._id == reviewId) {
-                    reviews[i] = newReview;
-                    temp =  reviews[i];
-                }
-            }
-            callback(temp);
+        function updateReviewById(reviewId, newReview) {
+            var deferred = $q.defer();
+            $http.put("/api/project/review/" + reviewId, newReview)
+                .success(function (response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
         }
     }
 })();

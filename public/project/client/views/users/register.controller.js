@@ -7,8 +7,8 @@
 
     function RegisterController($rootScope, $scope, $location, UserService) {
         $scope.register = function(user) {
-            UserService.createUser(user,
-                function(response){
+            UserService.createUser(user)
+                .then(function(response){
                     $rootScope.currentUser = response;
                 });
             $location.path('/profile');

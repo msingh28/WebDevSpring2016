@@ -6,7 +6,6 @@ module.exports = function() {
 
     var books = require("./book.mock.json");
 
-
     var api = {
         Create: Create,
         FindAll: FindAll,
@@ -17,9 +16,9 @@ module.exports = function() {
     };
     return api;
 
-    function Create(book, userId) {
+    function Create(book) {
+        console.log("model.js");
         book._id = uuid.v1();
-        book.userId = userId;
         books.push(book);
         return book;
     }

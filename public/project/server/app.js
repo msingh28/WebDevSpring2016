@@ -7,5 +7,5 @@ module.exports = function(app) {
 
     var UserService  = require("./services/user.service.server.js") (app, userModel);
     var BookService = require("./services/book.service.server.js")(app, bookModel);
-    var reviewService = require("./services/field.service.server.js")(app, reviewModel)
+    var ReviewsService = require("./services/review.service.server.js")(app, reviewModel)
 };

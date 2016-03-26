@@ -13,7 +13,10 @@ module.exports = function() {
         Update: Update,
         Delete: Delete,
         findUserByUsername: findUserByUsername,
-        findUserByCredentials: findUserByCredentials
+        findUserByCredentials: findUserByCredentials,
+        Following: Following,
+        updateFollowing: updateFollowing,
+        deleteFollowing: deleteFollowing
     };
     return api;
 
@@ -73,5 +76,46 @@ module.exports = function() {
             }
         }
         return user;
+    }
+
+    function Following(userId) {
+        var following = [];
+        for(var i = 0; i < users.length; i++) {
+            if(users[i]._id == userId) {
+                for(var j = 0; j< users[i].following.length; j++) {
+                    following.push(FindById(users[i].following[j]));
+                }
+                break;
+            }
+        }
+        return following;
+    }
+
+    function updateFollowing(userId, following) {
+        console.log("model");
+        console.log(userId);
+        var newFollowing = null;
+        for(var i = 0; i < users.length; i++) {
+            if(users[i]._id == userId) {
+                newFollowing = findUserByUsername(following);
+                console.log(following);
+                users[i].following.push(newFollowing._id);
+            }
+        }
+        return newFollowing;
+    }
+
+    function deleteFollowing(userId, followingId) {
+        var following = [];
+        for(var i = 0; i < users.length; i++) {
+            if(users[i]._id == userId) {
+                following = users[i].following;
+                for (var j = 0; j < following; j++) {
+                    if (following[j]._id == followingId) {
+                        users[j].following.splice(j, 1);
+                    }
+                }
+            }
+        }
     }
 }

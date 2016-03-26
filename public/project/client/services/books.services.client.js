@@ -5,8 +5,7 @@
         .module("NextReadHuntApp")
         .factory("BookService", BookService);
 
-    function BookService() {
-
+    function BookService($http, $q) {
 
         var service = {
             addBook: addBook,
@@ -16,30 +15,31 @@
 
         return service;
 
-        function addBook(userId, book, callback) {
-            book._id = (new Date).getTime();
-            book.userId = userId;
-            books.push(book);
-            callback(book);
+        function addBook(book) {
+            var deferred = $q.defer();
+            $http.post("/api/project/book/"+book.userId+"/book", book)
+                .success(function (response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
         }
 
-        function findAllBooks(userId, callback) {
-            var userBooks = [];
-            for(var i=0; i < books.length; i++) {
-                if(books[i].userId == userId){
-                    userBooks.push(books[i]);
-                }
-            }
-            callback(userBooks);
+        function findAllBooks(userId) {
+            var deferred = $q.defer();
+            $http.get("/api/project/book/"+userId)
+                .success(function (response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
         }
 
-        function deleteBookById(bookId, callback) {
-            for(var i=0; i < books.length; i++) {
-                if(books[i]._id == bookId) {
-                    books.splice(i, 1);
-                }
-            }
-            callback(books);
+        function deleteBookById(bookId) {
+            var deferred = $q.defer();
+            $http.delete("/api/project/book/"+bookId)
+                .success(function (response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
         }
     }
 })();
