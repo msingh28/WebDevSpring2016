@@ -8,8 +8,13 @@ module.exports = function(app, userModel) {
     app.delete("/api/assignment/user/:id", deleteUser);
 
     function createUser(req, res) {
-        var user = req.body;
-        res.send(userModel.Create(user));
+        userModel
+            .Create(req.body)
+            .then(function(user){
+                res.json(user);
+            });
+       /* var user = req.body;
+        res.send(userModel.Create(user));*/
     }
 
     function getUsers(req, res) {
@@ -17,31 +22,61 @@ module.exports = function(app, userModel) {
         var password = req.param("password");
 
         if(username == 'undefined' && password == 'undefined') {
-            res.json(userModel.FindAll)
+            //res.json(userModel.FindAll)
+            userModel
+                .FindAll()
+                .then(function(user){
+                    res.json(user);
+                });
         }
 
         if(username != null && password != null) {
-            res.json(userModel.findUserByCredentials(username, password));
+            userModel
+                .findUserByCredentials(username, password)
+                .then(function(user){
+                    res.json(user);
+                });
+            //res.json(userModel.findUserByCredentials(username, password));
         }
 
         else {
-            res.json(userModel.findUserByUsername(username));
+            userModel
+                .findUserByUsername(username)
+                .then(function(user){
+                    res.json(user);
+                });
+            //res.json(userModel.findUserByUsername(username));
         }
     }
 
     function getUserById(req, res) {
         var id = req.params.id;
-        res.json(userModel.FindById(id));
+        userModel
+            .FindById(id)
+            .then(function(user){
+                res.json(user);
+            });
+        //res.json(userModel.FindById(id));
     }
 
     function updateUser(req, res) {
         var id = req.params.id;
         var user = req.body;
-        res.json(userModel.Update(id, user));
+        userModel
+            .Update(id, user)
+            .then(function(user){
+                res.json(user);
+            });
+        //res.json(userModel.Update(id, user));
     }
 
     function deleteUser(req, res) {
         var id = req.params.id;
-        res.json(userModel.Delete(id));
+        userModel
+            .Delete(id)
+            .then(function(user){
+                res.json(user);
+            });
+        //res.json(userModel.Delete(id));
     }
 }
