@@ -20,10 +20,13 @@
         var currentForm = {};
 
         $scope.addForm = function() {
+            console.log("I entered in form controller add")
             if($scope.formName!=null) {
                 currentForm.title = $scope.formName;
                 FormService.createFormForUser($rootScope.currentUser._id, currentForm)
                     .then(function(response){
+                        console.log("in form controller adding new form response")
+                        console.log(response);
                         $scope.forms.push(response);
                     });
                 $scope.formName = null;

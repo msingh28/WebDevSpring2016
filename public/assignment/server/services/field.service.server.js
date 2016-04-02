@@ -12,9 +12,11 @@ module.exports = function(app, fieldModel) {
         var formId = req.params.formId;
         var field = req.body;
         fieldModel
-            .Create(formId, field)
+            .CreateField(formId, field)
             .then(function(field){
-                res.json(field);
+                //console.log("created field");
+               // console.log(field.fields)
+                res.json(field.fields);
             });
        // res.json(formModel.CreateField(formId, field));
     }
@@ -24,7 +26,7 @@ module.exports = function(app, fieldModel) {
         fieldModel
             .FindAllFields(formId)
             .then(function(field){
-                res.json(field);
+                res.json(field.fields);
             });
        // res.json(formModel.FindAllFields(formId));
     }
@@ -35,6 +37,8 @@ module.exports = function(app, fieldModel) {
         fieldModel
             .FindFieldById(formId, fieldId)
             .then(function(field){
+                console.log("reponse of getfieldBy id server");
+                console.log(field);
                 res.json(field);
             });
         //res.json(formModel.FindFieldById(formId, fieldId));
@@ -44,10 +48,14 @@ module.exports = function(app, fieldModel) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
         var field = req.body;
+        //console.log(req);
+        console.log("fieldId for the one updating")
+        //console.log(req);
+        console.log(fieldId);
         fieldModel
             .UpdateField(formId, fieldId, field)
             .then(function(field){
-                res.json(field);
+                res.json(field.fields);
             });
         //res.json(formModel.UpdateField(formId, fieldId, field));
     }
@@ -55,10 +63,11 @@ module.exports = function(app, fieldModel) {
     function deleteField(req, res) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
+
         fieldModel
             .DeleteFieldById(formId, fieldId)
             .then(function(field){
-                res.json(field);
+                res.json(field.fields);
             });
         //res.json(formModel.DeleteFieldById(formId, fieldId));
     }
@@ -69,7 +78,7 @@ module.exports = function(app, fieldModel) {
         fieldModel
             .RearrangeFields(formId, fields)
             .then(function(field){
-                res.json(field);
+                res.json(field.fields);
             });
         //res.json(formModel.RearrangeFields(formId, fields));
     }

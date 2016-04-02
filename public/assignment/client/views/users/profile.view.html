@@ -29,7 +29,13 @@
         <div class="form-group">
             <label for="inputEmail5" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-                <input type="email" ng-model="currentuser.email" class="form-control" id="inputEmail5"  placeholder="Email">
+                <input type="text" ng-model="currentuser.emails" class="form-control" id="inputEmail5"  placeholder="Email" ng-list>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phone" class="col-sm-2 control-label">Phones</label>
+            <div class="col-sm-10">
+                <input type="text" ng-model="currentuser.phones" class="form-control" id="phone"  placeholder="0123456789" ng-list>
             </div>
         </div>
         <div class="form-group">

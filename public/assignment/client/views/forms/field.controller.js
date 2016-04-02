@@ -30,6 +30,8 @@
         }
 
         $scope.deleteField = function(fieldId) {
+            console.log("field controller")
+            console.log(fieldId);
             FieldService.deleteFieldFromForm($scope.formId,fieldId)
                 .then(function(response){
                     $scope.formFields = response;
@@ -43,13 +45,17 @@
                 });
         }
 
-        $scope.editField = function(fieldId, fieldLabel) {
-            $scope.dialogFor = fieldLabel;
+        $scope.editField = function(fieldId) {
+            console.log("I am inside edit of controller")
+
             FieldService.getFieldForForm($scope.formId,fieldId)
                 .then(function(response){
+                    console.log("response");
+                    console.log(response);
                     $scope.dialog = response;
+                    $scope.dialogFor = response.label;
                     if(response.hasOwnProperty("options")) {
-                        $scope.dialog.options = JSON.stringify($scope.dialog.options).substr(1,JSON.stringify($scope.dialog.options).length-2);
+                        $scope.dialog.options = JSON.stringify($scope.dialog.options);
                     }
                 });
         }
@@ -58,6 +64,8 @@
             if(field.hasOwnProperty("options")){
                 field.options = JSON.parse(field.options);
             }
+            console.log("In fields controller");
+            console.log(field);
             FieldService.updateField($scope.formId, field._id, field)
                 .then(function(response){
                     $scope.formFields = response;
@@ -77,17 +85,17 @@
             if(fieldType != null) {
                 var newField = {};
                 if (fieldType == "Single Line Text Field") {
-                    newField = {"_id": null, "label": "New Text Field", "type": "TEXT", "placeholder": "New Field"};
+                    newField = {"label": "New Text Field", "type": "TEXT", "placeholder": "New Field"};
                 }
                 else if (fieldType == "Multi Line Text Field") {
-                    newField = {"_id": null, "label": "New Text Field", "type": "TEXTAREA", "placeholder": "New Field"};
+                    newField = {"label": "New Text Field", "type": "TEXTAREA", "placeholder": "New Field"};
                 }
                 else if (fieldType == "Date Field") {
-                    newField = {"_id": null, "label": "New Date Field", "type": "DATE"};
+                    newField = {"label": "New Date Field", "type": "DATE"};
                 }
                 else if (fieldType == "Dropdown Field") {
                     newField = {
-                        "_id": null, "label": "New Dropdown", "type": "OPTIONS", "options": [
+                            "label": "New Dropdown", "type": "OPTIONS", "options": [
                             {"label": "Option 1", "value": "OPTION_1"},
                             {"label": "Option 2", "value": "OPTION_2"},
                             {"label": "Option 3", "value": "OPTION_3"}
@@ -96,7 +104,7 @@
                 }
                 else if (fieldType == "CheckBoxes Field") {
                     newField = {
-                        "_id": null, "label": "New Checkboxes", "type": "CHECKBOXES", "options": [
+                            "label": "New Checkboxes", "type": "CHECKBOXES", "options": [
                             {"label": "Option A", "value": "OPTION_A"},
                             {"label": "Option B", "value": "OPTION_B"},
                             {"label": "Option C", "value": "OPTION_C"}
@@ -105,7 +113,7 @@
                 }
                 else if (fieldType == "Radio Buttons Field") {
                     newField = {
-                        "_id": null, "label": "New Radio Buttons", "type": "RADIOS", "options": [
+                            "label": "New Radio Buttons", "type": "RADIOS", "options": [
                             {"label": "Option X", "value": "OPTION_X"},
                             {"label": "Option Y", "value": "OPTION_Y"},
                             {"label": "Option Z", "value": "OPTION_Z"}

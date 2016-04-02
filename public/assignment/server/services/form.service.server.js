@@ -13,7 +13,7 @@ module.exports = function(app, formModel) {
         var form = req.body;
         formModel
             .Create(form, userId)
-            .then(function(user){
+            .then(function(form){
                 res.json(form);
             });
         /*var userId = req.params.userId;
@@ -23,6 +23,8 @@ module.exports = function(app, formModel) {
 
     function getForms(req, res) {
         var userId = req.params.userId;
+        console.log("In forms server service")
+        console.log(userId);
         formModel
             .FindFormsByUserId(userId)
             .then(function(user){
