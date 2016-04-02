@@ -28,6 +28,13 @@ module.exports = function(db, mongoose) {
             } else {
                 //console.log(user);
                 deferred.resolve(user);
+                user.save(function(err, updatedUser) {
+                    if(err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(updatedUser);
+                    }
+                });
             }
         });
         return deferred.promise;
@@ -105,6 +112,13 @@ module.exports = function(db, mongoose) {
             } else {
                 console.log(user);
                 deferred.resolve(user);
+                user.save(function(err, updatedUser) {
+                    if(err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(updatedUser);
+                    }
+                });
             }
         });
 

@@ -11,7 +11,9 @@ module.exports = function(app, userModel) {
         userModel
             .Create(req.body)
             .then(function(user){
-                res.json(user[0]);
+                console.log("in user.service.server")
+                console.log(user);
+                res.json(user);
             });
        /* var user = req.body;
         res.send(userModel.Create(user));*/

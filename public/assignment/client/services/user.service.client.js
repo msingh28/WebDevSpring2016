@@ -40,6 +40,8 @@
             var deferred = $q.defer();
             $http.post("/api/assignment/user", user)
                 .success(function(response){
+                    console.log("in user.service.server")
+                    console.log(response);
                     deferred.resolve(response);
                 });
             return deferred.promise;
