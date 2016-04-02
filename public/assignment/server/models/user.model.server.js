@@ -26,8 +26,7 @@ module.exports = function(db, mongoose) {
             if(err) {
                 deferred.reject(err);
             } else {
-                console.log("Sheet>");
-                console.log(user);
+                //console.log(user);
                 deferred.resolve(user);
             }
         });
@@ -39,22 +38,42 @@ module.exports = function(db, mongoose) {
 
     function FindAll() {
         var deferred = q.defer();
+        UserModel.find(function (err, user) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(user);
+            }
+        });
+
+        return deferred.promise;
+       /* var deferred = q.defer();
 
         UserModel.find(function(err, users){
             if(err) {
                 deferred.reject(err);
             } else {
-                deferred.resolve(sheets);
+                deferred.resolve(users);
             }
         });
 
-        return deferred.promise;
+        return deferred.promise;*/
        // return users;
     }
 
     function FindById(id) {
-
         var deferred = q.defer();
+        UserModel.find({_id: {$in: id}}, function (err, user) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(user);
+            }
+        });
+
+        return deferred.promise;
+
+        /*var deferred = q.defer();
 
         UserModel.findById(id, function(err, user){
             if(err) {
@@ -64,7 +83,7 @@ module.exports = function(db, mongoose) {
             }
         });
 
-        return deferred.promise;
+        return deferred.promise;*/
         /*var user=null;
         for(var i=0; i < users.length; i++) {
             if(users[i]._id==id){
@@ -77,13 +96,15 @@ module.exports = function(db, mongoose) {
     function Update(id, user) {
         var deferred = q.defer();
 
-        user.delete("_id");
+        //var temp = user.delete("_id");
+        delete user._id;
 
         UserModel.update({_id: id}, {$set: user}, function(err, user) {
             if(err) {
                 deferred.reject(err);
             } else {
-                deferred.resolve(sheet);
+                console.log(user);
+                deferred.resolve(user);
             }
         });
 
@@ -119,6 +140,16 @@ module.exports = function(db, mongoose) {
 
     function findUserByUsername(username) {
         var deferred = q.defer();
+        UserModel.find({username: {$in: username}}, function (err, user) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(user);
+            }
+        });
+
+        return deferred.promise;
+        /*var deferred = q.defer();
 
         UserModel.findByUsername(username, function(err, username){
             if(err) {
@@ -128,7 +159,7 @@ module.exports = function(db, mongoose) {
             }
         });
 
-        return deferred.promise;
+        return deferred.promise;*/
        /* var user=null;
         for(var i=0; i < users.length; i++) {
             if(users[i].username == username){
@@ -139,14 +170,14 @@ module.exports = function(db, mongoose) {
     }
 
     function findUserByCredentials(username, password) {
-        UserModel.findByUserCredentials(username, password,  function(err, username, password){
-            if(err) {
+        var deferred = q.defer();
+        UserModel.find({username: {$in: username}, password: {$in: password}}, function (err, user) {
+            if (err) {
                 deferred.reject(err);
             } else {
-                deferred.resolve(sheet);
+                deferred.resolve(user);
             }
         });
-
         return deferred.promise;
        /* var user = null;
         for(var i=0; i < users.length; i++){

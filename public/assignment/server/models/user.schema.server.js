@@ -13,7 +13,7 @@ module.exports = function(mongoose) {
         // list of users that like this movie
         userLikes: [
             {username: String}
-        ]*/,
+        ]*/
         // store movie documents in this collection
     }, {collection: 'assignment.formMaker.user'});
 

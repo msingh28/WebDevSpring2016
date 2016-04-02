@@ -11,7 +11,7 @@ module.exports = function(app, userModel) {
         userModel
             .Create(req.body)
             .then(function(user){
-                res.json(user);
+                res.json(user[0]);
             });
        /* var user = req.body;
         res.send(userModel.Create(user));*/
@@ -26,7 +26,7 @@ module.exports = function(app, userModel) {
             userModel
                 .FindAll()
                 .then(function(user){
-                    res.json(user);
+                    res.json(user[0]);
                 });
         }
 
@@ -34,7 +34,8 @@ module.exports = function(app, userModel) {
             userModel
                 .findUserByCredentials(username, password)
                 .then(function(user){
-                    res.json(user);
+                  //  console.log(user);
+                    res.json(user[0]);
                 });
             //res.json(userModel.findUserByCredentials(username, password));
         }
@@ -43,7 +44,7 @@ module.exports = function(app, userModel) {
             userModel
                 .findUserByUsername(username)
                 .then(function(user){
-                    res.json(user);
+                    res.json(user[0]);
                 });
             //res.json(userModel.findUserByUsername(username));
         }
@@ -54,7 +55,7 @@ module.exports = function(app, userModel) {
         userModel
             .FindById(id)
             .then(function(user){
-                res.json(user);
+                res.json(user[0]);
             });
         //res.json(userModel.FindById(id));
     }
@@ -62,10 +63,11 @@ module.exports = function(app, userModel) {
     function updateUser(req, res) {
         var id = req.params.id;
         var user = req.body;
+
         userModel
             .Update(id, user)
             .then(function(user){
-                res.json(user);
+                res.json(user[0].body);
             });
         //res.json(userModel.Update(id, user));
     }
@@ -75,7 +77,7 @@ module.exports = function(app, userModel) {
         userModel
             .Delete(id)
             .then(function(user){
-                res.json(user);
+                res.json(user[0].body);
             });
         //res.json(userModel.Delete(id));
     }
