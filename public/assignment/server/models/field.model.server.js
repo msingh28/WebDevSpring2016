@@ -8,9 +8,6 @@ module.exports = function(db, mongoose) {
     var FormSchema = require("./form.schema.server.js")(mongoose);
     var FieldModel  = mongoose.model("FieldModel", FormSchema);
 
-   // var FormSchema = require("./form.schema.server.js")(mongoose);
-   // var FormModel  = mongoose.model("FormModel", FormSchema);
-
 
     var api = {
         FindAllFields: FindAllFields,
@@ -34,24 +31,6 @@ module.exports = function(db, mongoose) {
             }
         });
         return deferred.promise;
-       /* var deferred = q.defer();
-
-        FieldModel.findByFormId(formId, function(err, formId){
-            if(err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(fields);
-            }
-        });
-
-        return deferred.promise;
-        /!*var fields = [];
-        for(var i=0; i < forms.length; i++) {
-            if(forms[i]._id == formId) {
-                fields = forms[i].fields;
-            }
-        }
-        return fields;*!/*/
     }
 
     function FindFieldById(formId, fieldId) {
@@ -71,37 +50,6 @@ module.exports = function(db, mongoose) {
             }
         });
         return deferred.promise;
-        //var deferred = q.defer();
-        //var deferred = q.defer();
-        //FieldModel.find({_id: {$in: fieldId}}, function (err, field) {
-        //    if (err) {
-        //        deferred.reject(err);
-        //    } else {
-        //        deferred.resolve(field);
-        //    }
-        //});
-        //
-        //return deferred.promise;
-        /*FormModel.findById(formId, fieldId, function(err, fieldId){
-            if(err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(field);
-            }
-        });
-
-        return deferred.promise;*/
-        /*var fields = null;
-        var currentForm = FindById(formId);
-        if(currentForm != null) {
-            var formFields = currentForm.fields;
-            for(var i=0; i <formFields.length; i++) {
-                if(formFields[i]._id == fieldId){
-                    fields = formFields[i];
-                }
-            }
-        }
-        return fields;*/
     }
 
     function DeleteFieldById(formId, fieldId) {
@@ -129,26 +77,6 @@ module.exports = function(db, mongoose) {
             }
         });
         return deferred.promise;
-       /* var deferred = q.defer();
-
-        FieldModel.remove({formId: formId}, {_id: fieldId}, function(err, status) {
-            if(err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(status);
-            }
-        });*/
-        /*var currentForm = FindById(formId);
-        if(currentForm != null){
-            var formFields = currentForm.fields;
-            for(var i=0; i <formFields.length; i++) {
-                if(formFields[i]._id == fieldId) {
-                    formFields.splice(i, 1);
-                    currentForm.fields = formFields;
-                    return Update(currentForm._id,currentForm).fields;
-                }
-            }
-        }*/
     }
 
     function CreateField(formId, field) {
@@ -177,13 +105,6 @@ module.exports = function(db, mongoose) {
             }
         });
         return deferred.promise;
-       // return FormModel.Update(currentForm._id, currentForm).fields;
-        /*var currentForm = FindById(formId);
-        if(currentForm != null) {
-            field._id = uuid.v1();
-            currentForm.fields.push(field);
-            return Update(currentForm._id, currentForm).fields;
-        }*/
     }
 
     function UpdateField(formId, fieldId, field) {
@@ -214,17 +135,6 @@ module.exports = function(db, mongoose) {
             }
         });
         return deferred.promise;
-       /* var currentForm = FindById(formId);
-        if(currentForm!=null){
-            var formFields = currentForm.fields;
-            for(var i=0; i <formFields.length; i++) {
-                if(formFields[i]._id == fieldId){
-                    formFields[i] = field;
-                    currentForm.fields = formFields;
-                    return Update(currentForm._id, currentForm).fields;
-                }
-            }
-        }*/
     }
 
     function RearrangeFields(formId, fields) {

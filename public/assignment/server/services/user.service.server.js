@@ -15,8 +15,6 @@ module.exports = function(app, userModel) {
                 console.log(user);
                 res.json(user);
             });
-       /* var user = req.body;
-        res.send(userModel.Create(user));*/
     }
 
     function getUsers(req, res) {
@@ -24,7 +22,6 @@ module.exports = function(app, userModel) {
         var password = req.param("password");
 
         if(username == 'undefined' && password == 'undefined') {
-            //res.json(userModel.FindAll)
             userModel
                 .FindAll()
                 .then(function(user){
@@ -36,10 +33,8 @@ module.exports = function(app, userModel) {
             userModel
                 .findUserByCredentials(username, password)
                 .then(function(user){
-                  //  console.log(user);
                     res.json(user[0]);
                 });
-            //res.json(userModel.findUserByCredentials(username, password));
         }
 
         else {
@@ -48,7 +43,6 @@ module.exports = function(app, userModel) {
                 .then(function(user){
                     res.json(user[0]);
                 });
-            //res.json(userModel.findUserByUsername(username));
         }
     }
 
@@ -59,7 +53,6 @@ module.exports = function(app, userModel) {
             .then(function(user){
                 res.json(user[0]);
             });
-        //res.json(userModel.FindById(id));
     }
 
     function updateUser(req, res) {
@@ -71,7 +64,6 @@ module.exports = function(app, userModel) {
             .then(function(user){
                 res.json(user[0].body);
             });
-        //res.json(userModel.Update(id, user));
     }
 
     function deleteUser(req, res) {
@@ -81,6 +73,5 @@ module.exports = function(app, userModel) {
             .then(function(user){
                 res.json(user[0].body);
             });
-        //res.json(userModel.Delete(id));
     }
 }

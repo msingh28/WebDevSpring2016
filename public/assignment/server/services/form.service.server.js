@@ -16,9 +16,6 @@ module.exports = function(app, formModel) {
             .then(function(form){
                 res.json(form);
             });
-        /*var userId = req.params.userId;
-        var form = req.body;
-        res.json(formModel.Create(form, userId));*/
     }
 
     function getForms(req, res) {
@@ -30,8 +27,6 @@ module.exports = function(app, formModel) {
             .then(function(user){
                 res.json(user);
             });
-        /*var userId = req.params.userId;
-        res.json(formModel.FindFormsByUserId(userId));*/
     }
 
     function getFormById(req, res) {
@@ -41,8 +36,6 @@ module.exports = function(app, formModel) {
             .then(function(form){
                 res.json(form);
             });
-       /* var formId = req.params.formId;
-        res.json(formModel.FindById(formId));*/
     }
 
     function updateForm(req, res) {
@@ -53,21 +46,15 @@ module.exports = function(app, formModel) {
             .then(function(user){
                 res.json(user);
             });
-        /*var id = req.params.id;
-        var form = req.body;
-        res.json(formModel.Update(id, form));*/
     }
 
     function deleteForm(req, res) {
         var formId = req.params.formId;
-        //var id = req.params.id;
         formModel
             .Delete(formId)
             .then(function(user){
                 res.json(user);
             });
-        /*var formId = req.params.formId;
-        res.json(formModel.Delete(formId));*/
     }
 
     function getFormByTitle(req, res){
@@ -77,7 +64,5 @@ module.exports = function(app, formModel) {
             .then(function(form){
                 res.json(form);
             });
-       /* var formTitle = req.param("formTitle");
-        res.json(formModel.findFormByTitle(formTitle));*/
     }
 }

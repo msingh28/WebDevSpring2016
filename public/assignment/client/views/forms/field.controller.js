@@ -30,8 +30,6 @@
         }
 
         $scope.deleteField = function(fieldId) {
-            console.log("field controller")
-            console.log(fieldId);
             FieldService.deleteFieldFromForm($scope.formId,fieldId)
                 .then(function(response){
                     $scope.formFields = response;
@@ -46,12 +44,8 @@
         }
 
         $scope.editField = function(fieldId) {
-            console.log("I am inside edit of controller")
-
             FieldService.getFieldForForm($scope.formId,fieldId)
                 .then(function(response){
-                    console.log("response");
-                    console.log(response);
                     $scope.dialog = response;
                     $scope.dialogFor = response.label;
                     if(response.hasOwnProperty("options")) {
@@ -64,8 +58,6 @@
             if(field.hasOwnProperty("options")){
                 field.options = JSON.parse(field.options);
             }
-            console.log("In fields controller");
-            console.log(field);
             FieldService.updateField($scope.formId, field._id, field)
                 .then(function(response){
                     $scope.formFields = response;

@@ -7,7 +7,7 @@ module.exports = function(db, mongoose) {
 
     var UserSchema = require("./user.schema.server.js")(mongoose);
     var UserModel  = mongoose.model("UserModel", UserSchema);
-   // var users = require("./user.mock.json");
+
 
     var api = {
         Create: Create,
@@ -26,7 +26,6 @@ module.exports = function(db, mongoose) {
             if(err) {
                 deferred.reject(err);
             } else {
-                //console.log(user);
                 deferred.resolve(user);
                 user.save(function(err, updatedUser) {
                     if(err) {
@@ -38,9 +37,6 @@ module.exports = function(db, mongoose) {
             }
         });
         return deferred.promise;
-       // user._id = uuid.v1();
-       // users.push(user);
-      //  return user;
     }
 
     function FindAll() {
@@ -54,18 +50,6 @@ module.exports = function(db, mongoose) {
         });
 
         return deferred.promise;
-       /* var deferred = q.defer();
-
-        UserModel.find(function(err, users){
-            if(err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(users);
-            }
-        });
-
-        return deferred.promise;*/
-       // return users;
     }
 
     function FindById(id) {
@@ -79,31 +63,10 @@ module.exports = function(db, mongoose) {
         });
 
         return deferred.promise;
-
-        /*var deferred = q.defer();
-
-        UserModel.findById(id, function(err, user){
-            if(err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(sheet);
-            }
-        });
-
-        return deferred.promise;*/
-        /*var user=null;
-        for(var i=0; i < users.length; i++) {
-            if(users[i]._id==id){
-                user = users[i];
-            }
-        }
-        return user;*/
     }
 
     function Update(id, user) {
         var deferred = q.defer();
-
-        //var temp = user.delete("_id");
         delete user._id;
 
         UserModel.update({_id: id}, {$set: user}, function(err, user) {
@@ -112,23 +75,10 @@ module.exports = function(db, mongoose) {
             } else {
                 console.log(user);
                 deferred.resolve(user);
-                user.save(function(err, updatedUser) {
-                    if(err) {
-                        deferred.reject(err);
-                    } else {
-                        deferred.resolve(updatedUser);
-                    }
-                });
             }
         });
 
         return deferred.promise;
-        /*for(var i=0; i < users.length; i++) {
-            if(users[i]._id==id){
-                users[i] = user;
-            }
-        }
-        return user;*/
     }
 
     function Delete(id) {
@@ -143,13 +93,6 @@ module.exports = function(db, mongoose) {
         });
 
         return deferred.promise;
-
-        /*for (var i = 0; i < users.length; i++) {
-            if (users[i]._id == id) {
-                users.splice(i, 1);
-            }
-        }
-        return users;*/
     }
 
     function findUserByUsername(username) {
@@ -163,24 +106,6 @@ module.exports = function(db, mongoose) {
         });
 
         return deferred.promise;
-        /*var deferred = q.defer();
-
-        UserModel.findByUsername(username, function(err, username){
-            if(err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(sheet);
-            }
-        });
-
-        return deferred.promise;*/
-       /* var user=null;
-        for(var i=0; i < users.length; i++) {
-            if(users[i].username == username){
-                user = users[i];
-            }
-        }
-        return user;*/
     }
 
     function findUserByCredentials(username, password) {
@@ -193,12 +118,5 @@ module.exports = function(db, mongoose) {
             }
         });
         return deferred.promise;
-       /* var user = null;
-        for(var i=0; i < users.length; i++){
-            if(users[i].username == username && users[i].password == password){
-                user = users[i];
-            }
-        }
-        return user;*/
     }
 }

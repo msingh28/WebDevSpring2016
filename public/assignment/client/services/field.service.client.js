@@ -36,7 +36,6 @@
         }
 
         function getFieldForForm(formId, fieldId) {
-            console.log("I am in client field service")
             var deferred = $q.defer();
             $http.get("/api/assignment/form/"+formId+"/field/"+fieldId)
                 .success(function (response) {
@@ -56,8 +55,6 @@
 
         function updateField(formId, fieldId, field) {
             var deferred = $q.defer();
-            console.log("field.service.client.js");
-            console.log(fieldId);
             $http.put("/api/assignment/form/"+formId+"/field/"+fieldId, field)
                 .success(function (response) {
                     deferred.resolve(response);

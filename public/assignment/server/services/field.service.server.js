@@ -14,11 +14,8 @@ module.exports = function(app, fieldModel) {
         fieldModel
             .CreateField(formId, field)
             .then(function(field){
-                //console.log("created field");
-               // console.log(field.fields)
                 res.json(field.fields);
             });
-       // res.json(formModel.CreateField(formId, field));
     }
 
     function getFormFields(req, res) {
@@ -28,7 +25,6 @@ module.exports = function(app, fieldModel) {
             .then(function(field){
                 res.json(field.fields);
             });
-       // res.json(formModel.FindAllFields(formId));
     }
 
     function getFieldById(req, res) {
@@ -37,27 +33,20 @@ module.exports = function(app, fieldModel) {
         fieldModel
             .FindFieldById(formId, fieldId)
             .then(function(field){
-                console.log("reponse of getfieldBy id server");
-                console.log(field);
                 res.json(field);
             });
-        //res.json(formModel.FindFieldById(formId, fieldId));
     }
 
     function updateField(req, res) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
         var field = req.body;
-        //console.log(req);
-        console.log("fieldId for the one updating")
-        //console.log(req);
-        console.log(fieldId);
+
         fieldModel
             .UpdateField(formId, fieldId, field)
             .then(function(field){
                 res.json(field.fields);
             });
-        //res.json(formModel.UpdateField(formId, fieldId, field));
     }
 
     function deleteField(req, res) {
@@ -69,7 +58,6 @@ module.exports = function(app, fieldModel) {
             .then(function(field){
                 res.json(field.fields);
             });
-        //res.json(formModel.DeleteFieldById(formId, fieldId));
     }
 
     function RearrangeFields(req,res){
@@ -80,6 +68,5 @@ module.exports = function(app, fieldModel) {
             .then(function(field){
                 res.json(field.fields);
             });
-        //res.json(formModel.RearrangeFields(formId, fields));
     }
 }

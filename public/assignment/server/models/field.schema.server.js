@@ -1,3 +1,4 @@
+"use strict";
 module.exports = function(mongoose) {
 
     // use mongoose to declare a movie schema
@@ -11,14 +12,7 @@ module.exports = function(mongoose) {
         options: [{
             label: String,
             value : String
-        }]
-        /*// ids of users that like this movie
-         likes: [String],
-         // list of users that like this movie
-         userLikes: [
-         {username: String}
-         ]*/,
-        // store movie documents in this collection
+        }],
     }, {collection: 'assignment.formMaker.field'});
 
     return FieldSchema;
