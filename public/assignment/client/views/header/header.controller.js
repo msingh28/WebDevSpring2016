@@ -7,7 +7,17 @@
 
     function HeaderController($location, $scope, $rootScope) {
         $scope.reset = function() {
-            $rootScope.currentUser = null;
+            UserService
+                .logout()
+                .then(
+                    function(response){
+                        $rootScope.currentUser = null;
+                        $location.url("/login");
+                    },
+                    function(err) {
+                        $scope.error = err;
+                    }
+                );
         }
     }
 })();

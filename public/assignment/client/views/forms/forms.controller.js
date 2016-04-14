@@ -7,6 +7,10 @@
 
     function FormController($rootScope, $scope, FormService) {
         $scope.forms = [];
+        $scope.selectedFormIndex = null;
+        $scope.disable = true;
+        var currentForm = {};
+
 
         if($rootScope.currentUser != null) {
             FormService.findAllFormsForUser($rootScope.currentUser._id)
@@ -14,10 +18,6 @@
                     $scope.forms = response;
                 });
         }
-
-        $scope.selectedFormIndex = null;
-        $scope.disable = true;
-        var currentForm = {};
 
         $scope.addForm = function() {
             if($scope.formName!=null) {

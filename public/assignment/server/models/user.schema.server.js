@@ -8,6 +8,7 @@ module.exports = function(mongoose) {
         lastName: String,
         emails: [String],
         phones: [String],
+        roles: [String],
     }, {collection: 'assignment.formMaker.user'});
 
     return UserSchema;
