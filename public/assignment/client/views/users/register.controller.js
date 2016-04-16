@@ -13,7 +13,9 @@
             else {
                 UserService.register(user)
                     .then(function(response) {
-                            var user = response.data;
+                            var user = response;
+                        console.log("in register controller")
+                        console.log(user);
                             if (user != null) {
                                 $rootScope.currentUser = response;
                                 $location.path('/profile');

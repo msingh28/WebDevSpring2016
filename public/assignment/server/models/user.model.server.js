@@ -2,6 +2,8 @@
 
 var uuid = require('node-uuid');
 var q = require("q");
+var bcrypt = require('bcrypt');
+var SALT_WORK_FACTOR = 10;
 
 module.exports = function(db, mongoose) {
 
@@ -21,21 +23,33 @@ module.exports = function(db, mongoose) {
     return api;
 
     function Create(user) {
+        console.log("I cam in model");
         var deferred = q.defer();
-        UserModel.create(user, function(err, user) {
-            if(err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(user);
-               /* user.save(function(err, updatedUser) {
+        bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+            if (err) return deferred.promise;
+            bcrypt.hash(user.password, salt, function (err, hash) {
+                if (err) return deferred.promise;
+                user.password = hash;
+                UserModel.create(user, function(err, user) {
                     if(err) {
                         deferred.reject(err);
                     } else {
-                        deferred.resolve(updatedUser);
+                        deferred.resolve(user);
+                        /* user.save(function(err, updatedUser) {
+                         if(err) {
+                         deferred.reject(err);
+                         } else {
+                         deferred.resolve(updatedUser);
+                         }
+                         });*/
                     }
-                });*/
-            }
+                });
+            });
+
         });
+        //console.log("I am creating new user hashed password")
+        ///console.log(newUser.password);
+
         return deferred.promise;
     }
 
@@ -68,15 +82,23 @@ module.exports = function(db, mongoose) {
     function Update(id, user) {
         var deferred = q.defer();
         delete user._id;
-
-        UserModel.update({_id: id}, {$set: user}, function(err, user) {
-            if(err) {
-                deferred.reject(err);
-            } else {
-                //console.log(user);
-                deferred.resolve(user);
-            }
+        bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+            if (err) return deferred.promise;
+            bcrypt.hash(user.password, salt, function (err, hash) {
+                if (err) return deferred.promise;
+                user.password = hash;
+                UserModel.update({_id: id}, {$set: user}, function(err, user) {
+                    if(err) {
+                        deferred.reject(err);
+                    } else {
+                        //console.log(user);
+                        deferred.resolve(user);
+                    }
+                });
+            });
         });
+
+
 
         return deferred.promise;
     }
@@ -97,7 +119,7 @@ module.exports = function(db, mongoose) {
 
     function findUserByUsername(username) {
         var deferred = q.defer();
-        UserModel.find({username: {$in: username}}, function (err, user) {
+        UserModel.findOne({username: username}, function (err, user) {
             if (err) {
                 deferred.reject(err);
             } else {
@@ -110,18 +132,24 @@ module.exports = function(db, mongoose) {
 
     function findUserByCredentials(credentials) {
         var deferred = q.defer();
+
         UserModel.findOne(
             {
-                username: credentials.username,
-                password: credentials.password
+                username: credentials.username
             },
             function (err, user) {
                 if (err) {
                     deferred.reject(err);
                 } else {
-                    deferred.resolve(user);
+                    bcrypt.compare(credentials.password, user.password, function (err, isMatch){
+                        if(isMatch) {
+                            deferred.resolve(user);
+                        }
+                    });
+
                 }
             });
+
         return deferred.promise;
     }
 }

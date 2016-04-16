@@ -11,6 +11,7 @@ module.exports = function(app, userModel) {
     app.post  ('/api/assignment/admin/user',     auth, isAdmin, createUser);
     app.get   ('/api/assignment/loggedin',       loggedin);
     app.get   ('/api/assignment/admin/user',     auth, isAdmin, findAllUsers);
+    app.get   ('/api/assignment/admin/user/:id',     auth, isAdmin, getUserById)
     app.put   ('/api/assignment/user/:id', auth, updateUser);
     app.delete('/api/assignment/admin/user/:id', auth, isAdmin, deleteUser);
 
@@ -88,6 +89,8 @@ module.exports = function(app, userModel) {
 
     function register(req, res) {
         var newUser = req.body;
+        console.log("register user service");
+        console.log(newUser);
         newUser.roles = ['student'];
 
         userModel
@@ -95,9 +98,12 @@ module.exports = function(app, userModel) {
             .then(
                 function(user){
                     if(user) {
+                        console.log(user);
+                        console.log("user exist");
                         res.json(null);
                     } else {
-                        return userModel.createUser(newUser);
+                        console.log("user does not exist");
+                        return userModel.Create(newUser);
                     }
                 },
                 function(err){
@@ -124,7 +130,6 @@ module.exports = function(app, userModel) {
 
     function findAllUsers(req, res) {
        // console.log(req.user);
-        if(isAdmin(req.user)) {
             userModel
                 .FindAll()
                 .then(
@@ -135,13 +140,10 @@ module.exports = function(app, userModel) {
                         res.status(400).send(err);
                     }
                 );
-        } else {
-            res.status(403);
-        }
+
     }
 
     function deleteUser(req, res) {
-        if(isAdmin(req.user)) {
 
             userModel
                 .removeUser(req.params.id)
@@ -161,25 +163,27 @@ module.exports = function(app, userModel) {
                         res.status(400).send(err);
                     }
                 );
-        } else {
-            res.status(403);
-        }
+
     }
 
     function updateUser(req, res) {
         var newUser = req.body;
-        if(!isAdmin(req.user)) {
-            delete newUser.roles;
-        }
-        if(typeof newUser.roles == "string") {
+
+        /*if(typeof newUser.roles == "string") {
             newUser.roles = newUser.roles.split(",");
-        }
+        }*/
 
         userModel
             .updateUser(req.params.id, newUser)
             .then(
                 function(user){
-                    return userModel.findAllUsers();
+                    if(req.session.passport.user._id == req.params.id) {
+                        return user;
+                    }
+                    else {
+                        userModel.findAllUsers();
+                    }
+
                 },
                 function(err){
                     res.status(400).send(err);
@@ -193,6 +197,15 @@ module.exports = function(app, userModel) {
                     res.status(400).send(err);
                 }
             );
+    }
+
+    function getUserById(req, res) {
+        var id = req.params.id;
+        userModel
+            .FindById(id)
+            .then(function(user){
+                res.json(user[0]);
+            });
     }
 
     function createUser(req, res) {
@@ -211,7 +224,7 @@ module.exports = function(app, userModel) {
                     // if the user does not already exist
                     if(user == null) {
                         // create a new user
-                        return userModel.createUser(newUser)
+                        return userModel.Create(newUser)
                             .then(
                                 // fetch all the users
                                 function(){
@@ -240,12 +253,17 @@ module.exports = function(app, userModel) {
             )
     }
 
-    function isAdmin(user) {
+    function isAdmin(req, res, next) {
        // console.log(user[0].roles);
+        var user = req.user;
+        console.log("in user service");
+        console.log(req.user);
         if(user[0].roles.indexOf("admin") > -1) {
-            return true
+            next();
         }
-        return false;
+        else{
+            res.send(403);
+        }
     }
 
     function authorized (req, res, next) {
