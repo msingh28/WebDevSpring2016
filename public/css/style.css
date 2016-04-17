@@ -926,7 +926,7 @@ a.down {
 	font-size: 1.3em;
 }
 .banner {
-	min-height: 625px;
+	<!--min-height: 625px;-->
 }
 .hello h3 {
 	font-size: 5.5em;
