@@ -120,13 +120,13 @@ body a{
 }
 /*--banner--*/
 .banner{
-	background:url(../images/redBackground.jpg) repeat center;
+	background:url(../images/redBackground.jpg) no-repeat center;
 	width:100%;
 	height:100%;
 	display:block;
 	z-index: -1;
 	position:relative;
-	background-size:auto;
+	background-size: cover;
 }
 .myPhoto{
 	padding-top: 2%;
