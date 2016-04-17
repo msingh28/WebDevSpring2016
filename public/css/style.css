@@ -122,14 +122,13 @@ body a{
 .banner{
 	background:url(../images/redBackground.jpg) no-repeat center;
 	width:100%;
-	min-height:50%;
+	height:auto;
 	display:block;
-	z-index: -1;
 	position:relative;
 	background-size: cover;
 }
 .myPhoto{
-	padding-top: 2%;
+	padding-top: 5%;
 }
 @keyframes slide {
 	0% {
