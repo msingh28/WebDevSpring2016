@@ -11,6 +11,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <script src="js/jquery.min.js"></script>
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+
     <link href="css/animate.css" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -51,55 +52,62 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </head>
 <body>
 <!--header-->
-<div class="header">
-    <div class="container">
-        <div class="logo">
-
-            <a href="index.html"><h1>Monisha <span>Singh</span></h1></a>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar1" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand logo" href="index.html">Monisha <span>Singh</span></a>
         </div>
-        <div class="top-nav" class="navbar-collapse collapse">
-
-            <ul>
+        <!--<div class="logo">
+            <a href="index.html"><h1>Monisha <span>Singh</span></h1></a>
+        </div>-->
+        <div id="navbar1" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
                 <li class="active" ><a href="#home" class="scroll">Home</a></li>
                 <li><a href="#projects" class="scroll">Projects</a></li>
                 <li><a href="#contact" class="scroll">contact</a></li>
             </ul>
-            <a href="#" id="pull"><img src="images/menu.png" title="menu" /></a>
+            <!-- <a href="#" id="pull"><img src="images/menu.png" title="menu" /></a>-->
         </div>
-        <div class="clearfix"> </div>
     </div>
-</div>
+</nav>
 <!--banner-->
 <div class="banner">
 
     <div class="container">
         <!--<div>-->
-        <div >
+        <div class="row">
             <!--<div>-->
-            <div >
-
-                    <div class="banner-wrap">
-
-                        <div class="bannertop_box">
-                            <img class = "myPhoto" src="images/me.jpg" width="30%" height="30%">
-                            <div class="welcome_box">
-                                <h2>Hello Friends,<span>I AM A COMPUTER SCIENCE GRADUATE STUDENT AT</span>NORTHEASTERN UNIVERSITY.</h2>
-                            </div>
-                        </div>
-                    </div>
 
 
-            </div>
+
+                <div class="col-sm-6 services-grid">
+                    <img class = "myPhoto" src="images/me.jpg" width="50%" height="50%">
+                </div>
+                <div class="col-sm-6 services-grid backgroundText">
+
+                       <h2>Monisha Singh</h2>
+                    <h2>Graduate Student at Northeastern University</h2>
+
+                </div>
+
+
+
         </div>
         <!---->
 
-       <!-- <div class="banner-matter">
-            <p>Lorem ipsum <span> </span></p>
-            <p>Professional UI/ux, web, print designer</p>
-            <a href="#">http://www,Example.org</a>
-        </div>
-        <div class='clearfix'></div>
-        <a href="#hello" class="scroll down"><img src="images/arr.png" alt="" /></a>-->
+        <!-- <div class="banner-matter">
+             <p>Lorem ipsum <span> </span></p>
+             <p>Professional UI/ux, web, print designer</p>
+             <a href="#">http://www,Example.org</a>
+         </div>
+         <div class='clearfix'></div>
+         <a href="#hello" class="scroll down"><img src="images/arr.png" alt="" /></a>-->
     </div>
 </div>
 <!--content-->
@@ -126,12 +134,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             </div>
             <div class="services-bottom">
                 <div class="col-md-6 services-grid">
-                    <a href="http://webdev2016-singhmonisha.rhcloud.com/assignment/client/index.html"><img  src="images/forms.png" alt="" /></a>
+                    <a href="#formMakerDetails" data-toggle="modal"><img  src="images/forms.png" alt="" /></a>
                     <h4>Form Maker</h4>
                     <p>A web application to help it's users to create and manage their application forms.</p>
                 </div>
                 <div class="col-md-6 services-grid">
-                    <a href="http://webdev2016-singhmonisha.rhcloud.com/project/client/index.html"><img  src="images/books.ico" alt="" /></a>
+                    <a href="#ProjectDetails" data-toggle="modal"><img  src="images/books.ico" alt="" /></a>
                     <h4>Next Read Hunt</h4>
                     <p>A web application to help it's users to find their next read and mange their old reads.</p>
                 </div>
@@ -172,6 +180,57 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 </div>
 
+<div class="modal fade" id="formMakerDetails" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content services">
+            <div class="modal-header services-top">
+                <button type="button" class="close modalClose" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title  modalText" id="myModalLabel">F<span>ormMake</span>r</h3>
+            </div>
+            <div class="modal-body">
+                <a href="http://webdev2016-singhmonisha.rhcloud.com/assignment/client/index.html" data-toggle="modal"><img  src="images/forms.png" alt="" /></a>
+                <h4>Form Maker</h4>
+                <p>A web application to help it's users to create and manage their application forms.</p>
+                <br>
+                <div class="col-md-6 services-grid">
+                <h2 align = "left"><a href="https://github.com/msingh28/WebDevSpring2016">Github</a></h2>
+                    </div>
+                <div class="col-md-6 services-grid">
+                <h2 align = "right"><a href="http://webdev2016-singhmonisha.rhcloud.com/assignment/client/index.html">Openshift</a></h2>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ProjectDetails" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content services">
+            <div class="modal-header services-top">
+                <button type="button" class="close modalClose" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title  modalText" >N<span>extReadHun</span>t</h3>
+            </div>
+            <div class="modal-body">
+                <a href="http://webdev2016-singhmonisha.rhcloud.com/project/client/index.html" data-toggle="modal"><img  src="images/books.ico" alt="" /></a>
+                <h4>Next Read Hunt</h4>
+                <p>A web application to help it's users to find their next read and mange their old reads.</p>
+                <br>
+                <div class="col-md-4 services-grid">
+                    <h2 align = "left"><a href="https://docs.google.com/document/d/1vpQwNcW9GMCAiRz3EuGKkH_BD-7GAUpc-sCmNAlueUg/edit?usp=sharing">Proposal</a></h2>
+                </div>
+                <div class="col-md-4 services-grid">
+                    <h2 align = "center"><a href="https://github.com/msingh28/WebDevSpring2016">Github</a></h2>
+                </div>
+                <div class="col-md-4 services-grid">
+                    <h2 align = "right"><a href="http://webdev2016-singhmonisha.rhcloud.com/project/client/index.html">Openshift</a></h2>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 </html>
 <!--

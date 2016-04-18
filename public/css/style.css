@@ -24,17 +24,20 @@ body a{
 }
 .logo{
 	float: left;
-	margin-top: 1.5em;
 }
 .logo a{
 	text-decoration:none;
+	color:#fff;
 }
 .logo h1{
 	font-size:2em;
 	margin:0;
+	padding: 0;
 	color:#fff;
 }
-.logo h1 span{
+.logo span{
+	padding: 0;
+	margin:0;
 	color:#e84c3d;
 }
 .top-nav{
@@ -120,15 +123,20 @@ body a{
 }
 /*--banner--*/
 .banner{
-	background:url(../images/redBackground.jpg) no-repeat center;
+	background:url(../images/redBackground.jpg) no-repeat center ;
 	width:100%;
-	height:auto;
+	height:100%;
+	min-height: 500px;
 	display:block;
 	position:relative;
 	background-size: cover;
 }
 .myPhoto{
-	padding-top: 5%;
+padding-top: 20%;
+}
+.backgroundText{
+	padding-top: 20%;
+	color:white;
 }
 @keyframes slide {
 	0% {
@@ -332,6 +340,9 @@ ul.in-social li a span{
 	height: 50px;
 	display:block;
 }
+ul.in-social li.facebookIcon{
+	background: url(../images/img-sprite.png)
+}
 ul.in-social li.dribble a span{
 	background-position: -65px -75px;
 }
@@ -357,6 +368,12 @@ ul.in-social li a span:hover{
 	background:#393e42;
 	text-align:center;
 	padding:3em 0;
+}
+.modalClose{
+	color:white;
+}
+.services h2, h4, p{
+	color:white;
 }
 .services-top h3,.services-grid h4{
 	margin:0;
@@ -727,6 +744,9 @@ span.circles-number,span.circles-text {
 	font-weight:300;
 	text-align:center;
 }
+.contact h4{
+	color:black;
+}
 .in-on small{
 	font-size:1.5em;
 	color:#ccc;
@@ -909,6 +929,7 @@ a.down {
 }
 .welcome_box h2 {
 	font-size: 2.1em;
+	position: relative;
 }
 .wmuSliderPrev {
 	left: 27em;
