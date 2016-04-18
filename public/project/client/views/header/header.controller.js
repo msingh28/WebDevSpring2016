@@ -5,9 +5,22 @@
         .module("NextReadHuntApp")
         .controller("HeaderController", HeaderController);
 
-    function HeaderController($location, $scope, $rootScope) {
+    function HeaderController($location, $scope, $rootScope, UserService) {
+        console.log("In header controller");
+        console.log($rootScope.currentUser);
+        //$scope.currentUser = $rootScope.currentUser;
         $scope.reset = function() {
-            $rootScope.currentUser = null;
+            UserService
+                .logout()
+                .then(
+                    function(response){
+                        $rootScope.currentUser = null;
+                        $location.url("/login");
+                    },
+                    function(err) {
+                        $scope.error = err;
+                    }
+                );
         }
     }
 })();

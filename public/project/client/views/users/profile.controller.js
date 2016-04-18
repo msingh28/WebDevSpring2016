@@ -13,7 +13,10 @@
             UserService.updateUser(user._id,user)
                 .then(function(response){
                     $rootScope.currentUser = response;
-                });
+                },
+                    function(err) {
+                        $scope.error = err;
+                    });
             $location.path('/profile');
         }
     }

@@ -1,7 +1,6 @@
 "use strict";
 
-(function()
-{
+(function() {
     angular
         .module("NextReadHuntApp")
         .factory("UserService", UserService);
@@ -9,7 +8,17 @@
     function UserService($http, $q) {
 
         var service = {
+            login: login,
+            logout: logout,
+            register: register,
             findAllUsers: findAllUsers,
+            deleteUserById: deleteUserById,
+            updateUser: updateUser,
+            createUser: createUser,
+            findAllFollowing: findAllFollowing,
+            addFollower: addFollower,
+            deleteFollowingById: deleteFollowingById
+            /*findAllUsers: findAllUsers,
             findUserByCredentials: findUserByCredentials,
             createUser: createUser,
             deleteUserById: deleteUserById,
@@ -17,10 +26,38 @@
             findUserByUsername: findUserByUsername,
             findAllFollowing: findAllFollowing,
             addFollower: addFollower,
-            deleteFollowingById: deleteFollowingById
+            deleteFollowingById: deleteFollowingById*/
         };
 
         return service;
+        function login(user) {
+            var deferred = $q.defer();
+            console.log("I am inside client user service");
+            $http.post("/api/project/login", user)
+                .success(function(response) {
+                    console.log(user);
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
+
+        function logout() {
+            var deferred = $q.defer();
+            $http.post("/api/project/logout")
+                .success(function(response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
+
+        function register(user) {
+            var deferred = $q.defer();
+            $http.post("/api/project/register", user)
+                .success(function(response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
 
 
         function findAllUsers() {
