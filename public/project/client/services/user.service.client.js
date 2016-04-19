@@ -17,7 +17,10 @@
             createUser: createUser,
             findAllFollowing: findAllFollowing,
             addFollower: addFollower,
-            deleteFollowingById: deleteFollowingById
+            deleteFollowingById: deleteFollowingById,
+            findAllBooks: findAllBooks,
+            deleteBookById: deleteBookById,
+            findUserById: findUserById
             /*findAllUsers: findAllUsers,
             findUserByCredentials: findUserByCredentials,
             createUser: createUser,
@@ -114,6 +117,15 @@
             return deferred.promise;
         }
 
+        function findUserById(id) {
+            var deferred = $q.defer();
+            $http.get("/api/project/user/" + id)
+                .success(function (response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
+
         function findAllFollowing(userId) {
             var deferred = $q.defer();
             $http.get("/api/project/user/" + userId + "/following")
@@ -139,6 +151,29 @@
             var deferred = $q.defer();
             $http.delete("/api/project/user/"+ userId, followerId)
                 .success(function (response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
+
+        function findAllBooks(userId) {
+            var deferred = $q.defer();
+            $http.get("/api/project/user/"+ userId+"/books")
+                .success(function (response) {
+                    console.log("In client services");
+                    console.log(response);
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
+
+        function deleteBookById(bookId, userId) {
+            var deferred =$q.defer();
+            console.log("I reached in book delete client service")
+            $http.delete("/api/project/user/"+ userId+"/books/"+bookId)
+                .success(function (response) {
+                    console.log("In client services");
+                    console.log(response);
                     deferred.resolve(response);
                 });
             return deferred.promise;

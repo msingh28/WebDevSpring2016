@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <br>
 <nav ng-controller="NavController">
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs topNavButtons">
         <li ng-class="{'active': $location.url() == '/profile'}"><a href="#/profile">Profile</a></li>
         <li ng-class="{'active': $location.url() == '/books'}"><a href="#/books">Books</a></li>
         <li ng-class="{'active': $location.url() == '/following'}"><a href="#/following">Following</a></li>
@@ -12,33 +12,33 @@
 <div>
     <form class="form-horizontal">
         <div class="form-group">
-            <label for="username3" class="col-sm-2 control-label">Username</label>
+            <label for="username3" class="col-sm-2 control-label topNavButtons">Username</label>
             <div class="col-sm-10">
-                <input type="text" ng-model="currentuser.username" class="form-control" id="username3" placeholder="Username">
+                <input type="text" ng-model="currentuser.username" class="form-control " id="username3" placeholder="Username">
             </div>
         </div>
         <div class="form-group">
-            <label for="inputPassword4" class="col-sm-2 control-label">Password</label>
+            <label for="inputPassword4" class="col-sm-2 control-label topNavButtons">Password</label>
             <div class="col-sm-10">
-                <input type="password" ng-model="currentuser.password" class="form-control" id="inputPassword4" placeholder="Password">
+                <input disabled="disabled" type="password" ng-model="currentuser.password" class="form-control" id="inputPassword4" placeholder="Password">
             </div>
         </div>
         <div class="form-group">
-            <label for="firstname" class="col-sm-2 control-label">First Name</label>
+            <label for="firstname" class="col-sm-2 control-label topNavButtons">First Name</label>
             <div class="col-sm-10">
                 <input type="text" ng-model="currentuser.firstName" class="form-control" id="firstname" placeholder="First Name">
             </div>
         </div>
         <div class="form-group">
-            <label for="lastname" class="col-sm-2 control-label">Last Name</label>
+            <label for="lastname" class="col-sm-2 control-label topNavButtons">Last Name</label>
             <div class="col-sm-10">
                 <input type="text" ng-model="currentuser.lastName" class="form-control" id="lastname" placeholder="Last Name">
             </div>
         </div>
         <div class="form-group">
-            <label for="inputEmail5" class="col-sm-2 control-label">Email</label>
+            <label for="inputEmail5" class="col-sm-2 control-label topNavButtons">Email</label>
             <div class="col-sm-10">
-                <input type="email" ng-model="currentuser.email" class="form-control" id="inputEmail5"  placeholder="Email">
+                <input type="text" ng-model="currentuser.emails" class="form-control" id="inputEmail5"  placeholder="Email" ng-list>
             </div>
         </div>
         <div class="form-group">

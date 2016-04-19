@@ -3,22 +3,22 @@
 (function(){
     angular
         .module("NextReadHuntApp")
-        .factory("MovieService", movieService);
+        .factory("GoogleBookService", googleBooksService);
 
-    function movieService($http) {
+    function googleBooksService($http) {
 
         var api = {
-            findMovieByTitle: findMovieByTitle,
-            findMovieByImdbID: findMovieByImdbID
+            findBookByTitle: findBookByTitle,
+            findBookByID: findBookByID
         };
         return api;
 
-        function findMovieByTitle(title, callback) {
+        function findBookByTitle(title, callback) {
             $http.get("https://www.googleapis.com/books/v1/volumes?q="+title+"&key=AIzaSyAx6qr7KcIUkJoHAnJUH-6Ex4xSZHYQKeg")
                 .success(callback);
         }
 
-        function findMovieByImdbID(id, callback) {
+        function findBookByID(id, callback) {
             $http.get("https://www.googleapis.com/books/v1/volumes/"+id+"?key=AIzaSyAx6qr7KcIUkJoHAnJUH-6Ex4xSZHYQKeg")
                 .success(callback);
         }

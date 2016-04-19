@@ -6,6 +6,7 @@ module.exports = function(mongoose) {
         bookId: String,
         comments: String,
         userId: String,
+        userName: String,
     }, {collection: 'project.nextReadHunt.review'});
 
     return ReviewSchema;

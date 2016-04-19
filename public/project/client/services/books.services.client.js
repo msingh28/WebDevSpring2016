@@ -24,10 +24,12 @@
             return deferred.promise;
         }
 
-        function findAllBooks(userId) {
+        function findAllBooks() {
             var deferred = $q.defer();
-            $http.get("/api/project/book/"+userId)
+            $http.get("/api/project/books")
                 .success(function (response) {
+                    console.log("In book client service")
+                    console.log(response);
                     deferred.resolve(response);
                 });
             return deferred.promise;

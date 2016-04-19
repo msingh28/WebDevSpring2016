@@ -1,69 +1,148 @@
 "use strict";
 
 var uuid = require('node-uuid');
+var q = require("q");
+module.exports = function(db, mongoose) {
 
-module.exports = function() {
-
-    var books = require("./book.mock.json");
+    var BookSchema = require("./book.schema.server.js")(mongoose);
+    var BookModel  = mongoose.model("BookModel", BookSchema);
 
     var api = {
         Create: Create,
         FindAll: FindAll,
-        FindBooksByUserId: FindBooksByUserId,
+        //FindBooksByUserId: FindBooksByUserId,
         FindById: FindById,
         Delete: Delete,
-        findBookByTitle: findBookByTitle
+        findBookByTitle: findBookByTitle,
+        findReviews: findReviews
     };
     return api;
 
     function Create(book) {
         console.log("model.js");
-        book._id = uuid.v1();
+        var deferred = q.defer();
+        BookModel.create(book, function(err, book) {
+            if(err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(book);
+                /* user.save(function(err, updatedUser) {
+                 if(err) {
+                 deferred.reject(err);
+                 } else {
+                 deferred.resolve(updatedUser);
+                 }
+                 });*/
+            }
+        });
+       /* book._id = uuid.v1();
         books.push(book);
-        return book;
+        return book;*/
+        return deferred.promise;
     }
 
     function FindAll() {
-        return books;
+        var deferred = q.defer();
+        BookModel.find(function (err, books) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                console.log("In book model Findall");
+                console.log(books);
+                deferred.resolve(books);
+            }
+        });
+
+        return deferred.promise;
+        /*return books;*/
     }
 
-    function FindBooksByUserId(userId){
-        var userBooks = [];
+    /*function FindBooksByUserId(userId){
+        /!*var userBooks = [];
         for(var i=0; i < books.length; i++) {
             if(books[i].userId == userId){
                 userBooks.push(books[i]);
             }
         }
-        return userBooks;
-    }
+        return userBooks;*!/
+    }*/
 
 
     function FindById(id) {
-        var book=null;
+        var deferred = q.defer();
+        BookModel.findOne({_id: id}, function (err, book) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(book);
+            }
+        });
+
+        return deferred.promise;
+        /*var book=null;
         for(var i=0; i < books.length; i++) {
             if(books[i]._id==id){
                 book = books[i];
             }
         }
-        return book;
+        return book;*/
     }
 
     function Delete(id) {
-        for (var i = 0; i < books.length; i++) {
+        var deferred = q.defer();
+
+        BookModel.remove({_id: id}, function(err, status) {
+            if(err) {
+                deferred.reject(err);
+            } else {
+                status.save(function(err, updatedUser) {
+                    if(err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(updatedUser);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
+        /*for (var i = 0; i < books.length; i++) {
             if (books[i]._id == id) {
                 books.splice(i, 1);
                 return books;
             }
-        }
+        }*/
     }
 
     function findBookByTitle(title) {
-        var book = null;
+        var deferred = q.defer();
+        BookModel.findOne({title: title}, function (err, book) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(book);
+            }
+        });
+
+        return deferred.promise;
+        /*var book = null;
         for(var i=0; i < books.length; i++) {
             if(books[i].title == title){
                 book = books[i];
             }
         }
-        return book;
+        return book;*/
+    }
+
+    function findReviews(id) {
+        var deferred = q.defer();
+        BookModel.findOne({_id: id}, function (err, book) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(book.reviews);
+            }
+        });
+        return deferred.promise;
     }
 }

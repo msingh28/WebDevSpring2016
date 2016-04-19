@@ -16,6 +16,9 @@ module.exports = function(app, userModel) {
     app.get("/api/project/user/:id/following", auth, getFollowing);
     app.put("/api/project/user/:id/following", auth, updateFollowing);
     app.delete("/api/project/user/:id/:followingId", auth, deleteFollowing);
+    app.get("/api/project/user/:id/books", getBooks);
+    app.delete("/api/project/user/:userId/books/:bookId", deleteBookById);
+    app.get("/api/project/user/:id", getUserById);
 
     /*app.post("/api/project/user", createUser);
     app.get("/api/project/user", getUsers);
@@ -176,7 +179,7 @@ module.exports = function(app, userModel) {
          }*/
 
         userModel
-            .updateUser(req.params.id, newUser)
+            .Update(req.params.id, newUser)
             .then(
                 function(user){
                     if(req.session.passport.user._id == req.params.id) {
@@ -216,6 +219,38 @@ module.exports = function(app, userModel) {
         var userId = req.params.userId;
         var followingId = req.params.followerId;
         res.json(userModel.deleteFollowing(userId, followingId));
+    }
+
+    function getBooks(req, res) {
+        var userId = req.params.id;
+        console.log("In server services")
+        /*console.log(userModel.getBooks(userId));*/
+        userModel.getBooks(userId)
+            .then(
+                function(books){
+                    //console.log(books);
+                    res.json(books)
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
+        //res.json(userModel.getBooks(userId));
+    }
+
+    function deleteBookById(req, res) {
+        var userId = req.params.userId;
+        var bookId = req.params.bookId;
+        userModel.deleteBook(userId, bookId)
+            .then(
+                function(books){
+                    console.log(books);
+                    res.json(books)
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
     }
 
     /*function getUsers(req, res) {

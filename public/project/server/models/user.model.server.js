@@ -20,7 +20,9 @@ module.exports = function(db, mongoose) {
         findUserByCredentials: findUserByCredentials,
         Following: Following,
         updateFollowing: updateFollowing,
-        deleteFollowing: deleteFollowing
+        deleteFollowing: deleteFollowing,
+        getBooks: getBooks,
+        deleteBook: deleteBook
     };
     return api;
 
@@ -84,20 +86,13 @@ module.exports = function(db, mongoose) {
     function Update(id, user) {
         var deferred = q.defer();
         delete user._id;
-        bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
-            if (err) return deferred.promise;
-            bcrypt.hash(user.password, salt, function (err, hash) {
-                if (err) return deferred.promise;
-                user.password = hash;
-                UserModel.update({_id: id}, {$set: user}, function(err, user) {
-                    if(err) {
-                        deferred.reject(err);
-                    } else {
-                        //console.log(user);
-                        deferred.resolve(user);
-                    }
-                });
-            });
+        UserModel.update({_id: id}, {$set: user}, function(err, user) {
+            if(err) {
+                deferred.reject(err);
+            } else {
+                //console.log(user);
+                deferred.resolve(user);
+            }
         });
         return deferred.promise;
     }
@@ -186,6 +181,34 @@ module.exports = function(db, mongoose) {
         return following;*/
     }
 
+    function getBooks(userId) {
+        console.log("I am inside book model")
+        var deferred = q.defer();
+        console.log(userId);
+        UserModel.findOne({_id: userId}, function (err, users) {
+            if (err) {
+
+                deferred.reject(err);
+            } else {
+                console.log("In user model");
+                //console.log(users.books);
+                deferred.resolve(users.books);
+            }
+        });
+
+        return deferred.promise;
+
+        /*for(var i = 0; i < users.length; i++) {
+         if(users[i]._id == userId) {
+         for(var j = 0; j< users[i].following.length; j++) {
+         following.push(FindById(users[i].following[j]));
+         }
+         break;
+         }
+         }
+         return following;*/
+    }
+
     function updateFollowing(userId, following) {
         var deferred = q.defer();
         var newFollowing=null;
@@ -229,6 +252,7 @@ module.exports = function(db, mongoose) {
             } else {
                 var index = user.following.indexOf(followingId);
                 user.following.splice(index, 1);
+
                 deferred.resolve(user);
             }
         });
@@ -245,5 +269,42 @@ module.exports = function(db, mongoose) {
                 }
             }
         }*/
+    }
+
+    function deleteBook(userId, bookId) {
+        var deferred = q.defer();
+        var newFollowing=null;
+        UserModel.findOne({_id: userId}, function (err, user) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                //console.log("In delete book");
+                //console.log(user);
+                var index = user.books.indexOf(bookId);
+                user.books.splice(index, 1);
+                //deferred.resolve(user);
+               // user.books = books;
+                user.save(function(err, updatedUser) {
+                    if(err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(updatedUser);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
+        /*var following = [];
+         for(var i = 0; i < users.length; i++) {
+         if(users[i]._id == userId) {
+         following = users[i].following;
+         for (var j = 0; j < following; j++) {
+         if (following[j]._id == followingId) {
+         users[j].following.splice(j, 1);
+         }
+         }
+         }
+         }*/
     }
 }

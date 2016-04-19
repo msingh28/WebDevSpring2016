@@ -97,9 +97,9 @@ console.log("In checkLoggedIn");
         {
             $rootScope.errorMessage = null;
             // User is Authenticated
-            console.log("I am inside the checkLoggediN request");
+
             if (user !== '0')
-            {console.log(user);
+            {
                 $rootScope.currentUser = user[0];
                 deferred.resolve();
             }
