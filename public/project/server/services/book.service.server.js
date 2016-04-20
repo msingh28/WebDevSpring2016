@@ -77,7 +77,7 @@ module.exports = function(app, bookModel) {
                 },
                 function(){
                     res.status(400).send(err);
-    }
+                }
             );
     }
 

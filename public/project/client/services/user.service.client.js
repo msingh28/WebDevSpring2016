@@ -24,24 +24,13 @@
             updateReview: updateReview,
             deleteReviewById: deleteReviewById,
             findAllReviewsForUser: findAllReviewsForUser
-            /*findAllUsers: findAllUsers,
-            findUserByCredentials: findUserByCredentials,
-            createUser: createUser,
-            deleteUserById: deleteUserById,
-            updateUser: updateUser,
-            findUserByUsername: findUserByUsername,
-            findAllFollowing: findAllFollowing,
-            addFollower: addFollower,
-            deleteFollowingById: deleteFollowingById*/
         };
 
         return service;
         function login(user) {
             var deferred = $q.defer();
-            console.log("I am inside client user service");
             $http.post("/api/project/login", user)
                 .success(function(response) {
-                    console.log(user);
                     deferred.resolve(response);
                 });
             return deferred.promise;
@@ -170,7 +159,7 @@
 
         function deleteFollowingById(userId, followerId) {
             var deferred = $q.defer();
-            $http.delete("/api/project/user/"+ userId, followerId)
+            $http.delete("/api/project/user/"+ userId+"/"+followerId)
                 .success(function (response) {
                     deferred.resolve(response);
                 });

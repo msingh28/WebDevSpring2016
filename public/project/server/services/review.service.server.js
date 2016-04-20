@@ -36,11 +36,11 @@ module.exports = function(app, reviewModel) {
         var review = req.body;
         reviewModel.Update(id, review)
             .then(function (review){
-                res.json(review)
-            },
-            function(){
-                res.status(400).send(err);
-            })
+                    res.json(review)
+                },
+                function(){
+                    res.status(400).send(err);
+                })
 
     }
 

@@ -10,7 +10,6 @@ module.exports = function(db, mongoose) {
     var api = {
         Create: Create,
         FindAll: FindAll,
-        //FindBooksByUserId: FindBooksByUserId,
         FindById: FindById,
         Delete: Delete,
         findBookByTitle: findBookByTitle,
@@ -21,25 +20,14 @@ module.exports = function(db, mongoose) {
     return api;
 
     function Create(book) {
-        console.log("model.js");
         var deferred = q.defer();
         BookModel.create(book, function(err, book) {
             if(err) {
                 deferred.reject(err);
             } else {
                 deferred.resolve(book);
-                /* user.save(function(err, updatedUser) {
-                 if(err) {
-                 deferred.reject(err);
-                 } else {
-                 deferred.resolve(updatedUser);
-                 }
-                 });*/
             }
         });
-       /* book._id = uuid.v1();
-        books.push(book);
-        return book;*/
         return deferred.promise;
     }
 
@@ -69,14 +57,10 @@ module.exports = function(db, mongoose) {
             if (err) {
                 deferred.reject(err);
             } else {
-                console.log("In book model Findall");
-                console.log(books);
                 deferred.resolve(books);
             }
         });
-
         return deferred.promise;
-        /*return books;*/
     }
 
     function FindAllReviews(bookId){
@@ -85,25 +69,12 @@ module.exports = function(db, mongoose) {
             if (err) {
                 deferred.reject(err);
             } else {
-                console.log("In book model Findall");
-                console.log(book);
                 deferred.resolve(book.reviews);
             }
         });
 
         return deferred.promise;
     }
-
-    /*function FindBooksByUserId(userId){
-        /!*var userBooks = [];
-        for(var i=0; i < books.length; i++) {
-            if(books[i].userId == userId){
-                userBooks.push(books[i]);
-            }
-        }
-        return userBooks;*!/
-    }*/
-
 
     function FindById(id) {
         var deferred = q.defer();
@@ -116,18 +87,10 @@ module.exports = function(db, mongoose) {
         });
 
         return deferred.promise;
-        /*var book=null;
-        for(var i=0; i < books.length; i++) {
-            if(books[i]._id==id){
-                book = books[i];
-            }
-        }
-        return book;*/
     }
 
     function Delete(id) {
         var deferred = q.defer();
-
         BookModel.remove({_id: id}, function(err, status) {
             if(err) {
                 deferred.reject(err);
@@ -143,12 +106,6 @@ module.exports = function(db, mongoose) {
         });
 
         return deferred.promise;
-        /*for (var i = 0; i < books.length; i++) {
-            if (books[i]._id == id) {
-                books.splice(i, 1);
-                return books;
-            }
-        }*/
     }
 
     function findBookByTitle(title) {
@@ -162,13 +119,6 @@ module.exports = function(db, mongoose) {
         });
 
         return deferred.promise;
-        /*var book = null;
-        for(var i=0; i < books.length; i++) {
-            if(books[i].title == title){
-                book = books[i];
-            }
-        }
-        return book;*/
     }
 
     function findReviews(id) {

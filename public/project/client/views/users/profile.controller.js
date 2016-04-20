@@ -7,7 +7,6 @@
         .controller("ProfileController", ProfileController);
 
     function ProfileController($routeParams,$rootScope, $scope, $location, UserService) {
-        //$scope.currentuser = $rootScope.currentUser;
         var targetProfileId = $routeParams.userId;
         if($rootScope.currentUser){
             if($rootScope.currentUser._id == targetProfileId){
@@ -23,15 +22,10 @@
             }
 
         }
-
-
-
         $scope.update = function(user) {
             UserService.updateUser(user._id,user)
                 .then(function(response){
-                    console.log("after update response");
-                    console.log(response);
-                },
+                    },
                     function(err) {
                         $scope.error = err;
                     });

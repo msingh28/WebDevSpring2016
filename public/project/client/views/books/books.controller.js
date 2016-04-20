@@ -8,6 +8,9 @@
 
     function BooksController($routeParams, $rootScope, $scope, BookService, UserService) {
         $scope.books = [];
+        $scope.disable = true;
+        var currentBook ={};
+
         var targetProfileId = $routeParams.userId;
         if($rootScope.currentUser){
             if($rootScope.currentUser._id == targetProfileId){
@@ -34,31 +37,14 @@
 
         }
 
-        /*if($rootScope.currentUser != null) {
-            UserService.findAllBooks($rootScope.currentUser._id)
-                .then(function (response) {
-                    console.log("In books controller");
-                    console.log(response);
-                    $scope.books = response;
-                });
-        }*/
-
-        //$scope.selectedFormIndex = null;
-        $scope.disable = true;
-        var currentBook ={};
 
         $scope.deleteBook = function(id) {
-            //currentBook = $scope.books[index];
-            //console.log(index);
             UserService.deleteBookById(id, $rootScope.currentUser._id)
                 .then(function(response){
-                    //console.log("in books controller");
-                   // console.log(response)
-                   // $scope.books = $rootScope.currentUser.books;
+                    console.log(response.books);
                    $scope.books = response.books;
                 });
             $scope.selectedFormIndex = null;
-
         }
     }
 })();

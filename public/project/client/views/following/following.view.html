@@ -20,9 +20,9 @@
             </thead>
             <tbody>
             <tr ng-repeat="user in following" ng-class="{'success' : $index == selectedFormIndex}">
-                <td class="bookTitles"><a href="#/profile/{{user.userId}}">{{user.username}}</a></td>
+                <td class="bookTitles"><a href="#/profile/{{user._id}}">{{user.username}}</a></td>
                 <td>
-                    <span ng-disabled="currentuser!=currentUser" class="glyphicon glyphicon-thumbs-down iconButton" ng-click="deleteFollower($index)"></span>
+                    <span ng-disabled="currentuser!=currentUser" class="glyphicon glyphicon-thumbs-down iconButton" ng-click="deleteFollower(user)"></span>
                 </td>
             </tr>
             </tbody>

@@ -8,7 +8,7 @@
     function HeaderController($location, $scope, $rootScope, UserService) {
         console.log("In header controller");
         console.log($rootScope.currentUser);
-        //$scope.currentUser = $rootScope.currentUser;
+
         $scope.reset = function() {
             UserService
                 .logout()

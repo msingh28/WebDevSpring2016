@@ -6,7 +6,6 @@
         .factory("GoogleBookService", googleBooksService);
 
     function googleBooksService($http) {
-
         var api = {
             findBookByTitle: findBookByTitle,
             findBookByID: findBookByID

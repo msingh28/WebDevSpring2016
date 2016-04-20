@@ -32,7 +32,7 @@
             <td class="bookTitles ratingReviews">{{review.rating}}</td>
             <td class="bookTitles">{{review.comments}}</td>
             <td>
-                <span ng-disabled="currentuser!=currentUser" class="glyphicon glyphicon-remove iconButton" ng-click="deleteReview($index)"></span>&nbsp&nbsp&nbsp&nbsp&nbsp
+                <span ng-disabled="currentuser!=currentUser" class="glyphicon glyphicon-remove iconButton" ng-click="deleteReview(review)"></span>&nbsp&nbsp&nbsp&nbsp&nbsp
                 <span ng-disabled="currentuser!=currentUser" class="glyphicon glyphicon-pencil iconButton" ng-click="selectReview($index)"></span>
             </td>
         </tr>

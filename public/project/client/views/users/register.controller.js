@@ -13,20 +13,17 @@
             else{
                 UserService.register(user)
                     .then(function(response){
-                        var user = response;
-                        console.log("in register controller")
-                        console.log(user);
-                        if (user != null) {
-                            $rootScope.currentUser = response;
-                            $location.path('/profile/'+$rootScope.currentUser._id);
-                        }
+                            var user = response;
+                            if (user != null) {
+                                $rootScope.currentUser = response;
+                                $location.path('/profile/'+$rootScope.currentUser._id);
+                            }
 
-                    },
+                        },
                         function (err) {
                             $scope.error = err;
                         });
             }
-
         }
     }
 })();

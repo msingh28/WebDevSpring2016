@@ -14,12 +14,10 @@
                 .when("/register", {
                     templateUrl: "views/users/register.view.html",
                     controller: "RegisterController"
-                    //controllerAs: 'model'
                 })
                 .when("/login", {
                     templateUrl: "views/users/login.view.html",
                     controller: "LoginController"
-                   // controllerAs: 'model'
                 })
                 .when("/profile/:userId", {
                     templateUrl: "views/users/profile.view.html",
@@ -93,7 +91,7 @@
     var checkLoggedin = function($q, $timeout, $http, $location, $rootScope)
     {
         var deferred = $q.defer();
-console.log("In checkLoggedIn");
+
         $http.get('/api/project/loggedin').success(function(user)
         {
             $rootScope.errorMessage = null;

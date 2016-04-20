@@ -8,6 +8,10 @@
 
     function FollowingController($routeParams, $rootScope, $scope, UserService) {
         $scope.following = [];
+        $scope.selectedFormIndex = null;
+        $scope.disable = true;
+        var currentFollower;
+
         var targetProfileId = $routeParams.userId;
         if($rootScope.currentUser){
             if($rootScope.currentUser._id == targetProfileId){
@@ -15,38 +19,50 @@
                 $scope.disableProfile = false;
                 UserService.findAllFollowing($rootScope.currentUser._id)
                     .then(function (response) {
-                        console.log(response);
-                        $scope.following = response;
+                        var following =[];
+                        for(var j=0; j<response.length; j++){
+                            if(response[j]!=null){
+                                console.log(response[j]);
+                                UserService.findUserById(response[j])
+                                    .then(function (response) {
+                                        console.log(response);
+                                        if(typeof response =='object'){
+                                            following.push(response);
+                                        }
+
+                                    });
+                            }
+                        }
+                        $scope.following = following;
                     });
 
             }else {
                 UserService.findUserById(targetProfileId)
                     .then(function (response) {
-                        console.log(response);
                         $scope.currentuser = response;
                     })
                     .then(function (response) {
                         UserService.findAllFollowing($scope.currentuser._id)
                             .then(function (response) {
-                                console.log(response);
-                                $scope.following = response;
+                                var following =[];
+                                for(var j=0; j<response.length; j++){
+                                    if(response[j]!=null){
+                                        UserService.findUserById(response[j])
+                                            .then(function (response) {
+                                                if(typeof response =='object'){
+                                                    following.push(response);
+                                                }
+                                            });
+                                    }
+
+                                }
+                                console.log(following);
+                                $scope.following = following;
                             });
                     });
             }
 
         }
-
-        /*if($rootScope.currentUser != null) {
-            UserService.findAllFollowing($rootScope.currentUser._id)
-                .then(function (response) {
-                    console.log(response);
-                    $scope.following = response;
-                });
-        }*/
-
-        $scope.selectedFormIndex = null;
-        $scope.disable = true;
-        var currentFollower;
 
         $scope.addFollower = function() {
             if($scope.followerId!=null) {
@@ -62,11 +78,19 @@
             }
         }
 
-        $scope.deleteFollower = function(index) {
-            currentFollower = $scope.following[index];
+        $scope.deleteFollower = function(currentFollower) {
             UserService.deleteFollowingById($rootScope.currentUser._id, currentFollower._id)
                 .then(function(response){
-                    $scope.following.splice(index,1);
+                    var following = [];
+                    for(var i=0; i<response.following.length; i++){
+                        UserService.findUserById(response.following[i])
+                            .then(function (response) {
+                                if(typeof response =='object'){
+                                    following.push(response);
+                                }
+                            });
+                    }
+                    $scope.following = following;
                 });
             $scope.selectedFormIndex = null;
             $scope.formName = null;

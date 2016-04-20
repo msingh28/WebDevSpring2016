@@ -1,6 +1,5 @@
 <div class="pageTitle elementPadding" align="center"><h2>{{book.volumeInfo.title}}</h2></div>
-
-<div >
+<div>
     <img class="detailBookImg elementPadding" ng-src="{{book.volumeInfo.imageLinks.smallThumbnail}}" height="300px" />
 </div>
 <div class= "elementPadding pageDetails" align="center">
@@ -54,32 +53,32 @@
 </div>
 <div id="myReview" class="modal fade" role="dialog">
     <div class="modal-dialog">
-<!-- Modal content-->
-<div class="modal-content">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Review</h4>
-    </div>
-    <div class="modal-body">
-        <div class="form-horizontal" role="form">
-        <div class="form-group">
-            <label class="col-sm-2 control-label">Rating: </label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control"  ng-model="review.rating">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Review</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Rating: </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control"  ng-model="review.rating">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Comments: </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control"  ng-model="review.comments">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="addUserReview(review, book)">Submit</button>
+            </div>
         </div>
-            </div>
-            <div class="form-group">
-        <label class="col-sm-2 control-label">Comments: </label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control"  ng-model="review.comments">
-        </div>
-            </div>
-            </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="addUserReview(review, book)">Submit</button>
-    </div>
-</div>
 
-</div>
+    </div>
 </div>
