@@ -26,7 +26,7 @@
                                 UserService.findUserById(response[j])
                                     .then(function (response) {
                                         console.log(response);
-                                        if(typeof response =='object'){
+                                        if(typeof response =='object' && response!=null){
                                             following.push(response);
                                         }
 
@@ -49,7 +49,7 @@
                                     if(response[j]!=null){
                                         UserService.findUserById(response[j])
                                             .then(function (response) {
-                                                if(typeof response =='object'){
+                                                if(typeof response =='object' && response!=null){
                                                     following.push(response);
                                                 }
                                             });
@@ -85,7 +85,7 @@
                     for(var i=0; i<response.following.length; i++){
                         UserService.findUserById(response.following[i])
                             .then(function (response) {
-                                if(typeof response =='object'){
+                                if(typeof response =='object' && response!=null){
                                     following.push(response);
                                 }
                             });

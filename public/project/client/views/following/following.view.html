@@ -2,10 +2,10 @@
 <br>
 <nav ng-controller="NavController">
     <ul class="nav nav-tabs topNavButtons">
-        <li ng-class="{'active': $location.url() == '/profile'}"><a href="#/profile/{{currentUser._id}}">Profile</a></li>
-        <li ng-class="{'active': $location.url() == '/books'}"><a href="#/books/{{currentUser._id}}">Books</a></li>
-        <li ng-class="{'active': $location.url() == '/following'}"><a href="#/following/{{currentUser._id}}">Following</a></li>
-        <li ng-class="{'active': $location.url() == '/reviews'}"><a href="#/reviews/{{currentUser._id}}">Reviews</a></li>
+        <li ng-class="{'active': $location.url() == '/profile/{{currentUser._id}}'}"><a href="#/profile/{{currentUser._id}}">Profile</a></li>
+        <li ng-class="{'active': $location.url() == '/books/{{currentUser._id}}'}"><a href="#/books/{{currentUser._id}}">Books</a></li>
+        <li ng-class="{'active': $location.url() == '/following/{{currentUser._id}}'}"><a href="#/following/{{currentUser._id}}">Following</a></li>
+        <li ng-class="{'active': $location.url() == '/reviews/{{currentUser._id}}'}"><a href="#/reviews/{{currentUser._id}}">Reviews</a></li>
     </ul>
 </nav>
 <br>
@@ -20,7 +20,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="user in following" ng-class="{'success' : $index == selectedFormIndex}">
-                <td class="bookTitles"><a href="#/profile/{{user._id}}">{{user.username}}</a></td>
+                <td ><a href="#/profile/{{user._id}}" class="bookTitles">{{user.username}}</a></td>
                 <td>
                     <span ng-disabled="currentuser!=currentUser" class="glyphicon glyphicon-thumbs-down iconButton" ng-click="deleteFollower(user)"></span>
                 </td>

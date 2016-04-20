@@ -21,6 +21,7 @@
 
         function update(bookId, newReview) {
             var deferred = $q.defer();
+            console.log(bookId);
             $http.post("/api/project/book/"+bookId, newReview)
                 .success(function (response) {
                     deferred.resolve(response);

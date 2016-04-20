@@ -17,7 +17,7 @@
     <link href="css/dashboard.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
-<body ng-controller="MainController" class="mainPage">
+<body ng-controller="MainController" class="mainPage" ng-class="{'adminView': currentUser.roles.indexOf('admin')}">
 <div ng-include="'views/header/header.view.html'"></div>
 <div class="container-fluid">
     <div ng-view></div>
@@ -50,5 +50,6 @@
 <script src="services/reviews.services.client.js"></script>
 <script src="views/reviews/reviews.controller.js"></script>
 <script src="views/admin/admin.controller.js"></script>
+<script src="views/about/about.view.html"></script>
 </body>
 </html>

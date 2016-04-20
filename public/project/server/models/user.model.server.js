@@ -63,10 +63,11 @@ module.exports = function(db, mongoose) {
 
     function FindById(id) {
         var deferred = q.defer();
-        UserModel.find({_id: {$in: id}}, function (err, user) {
+        UserModel.findOne({_id: id}, function (err, user) {
             if (err) {
                 deferred.reject(err);
             } else {
+               // console.log(user);
                 deferred.resolve(user);
             }
         });

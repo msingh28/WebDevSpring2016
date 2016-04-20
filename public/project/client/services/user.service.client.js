@@ -56,6 +56,7 @@
 
         function updateReview(userId, review){
             var deferred = $q.defer();
+            console.log("I anm in client");
             $http.post("/api/project/user/"+ userId+"/review", review)
                 .success(function(response) {
                     deferred.resolve(response);

@@ -168,7 +168,7 @@ module.exports = function(app, userModel) {
                         return user;
                     }
                     else {
-                        userModel.findAllUsers();
+                        userModel.FindAll();
                     }
 
                 },
@@ -189,14 +189,17 @@ module.exports = function(app, userModel) {
     function updateReview(req, res){
         var userId = req.params.userId;
         var newreview = req.body;
-
         userModel.FindById(userId)
             .then(
                 function (user){
+                    //console.log()
                     var index = user.reviews.indexOf(newreview._id);
-                    user.reviews.splice(index, 1);
-                    console.log(user.reviews)
-                    user.reviews.push(newreview);
+                    var reviews = user.reviews;
+                    reviews.splice(index,1);
+                    console.log(reviews)
+                    //delete newreview._id;
+                    reviews.push(newreview)
+                    user.reviews = reviews;
                     console.log(user.reviews)
                     userModel
                         .Update(user._id, user)
@@ -207,7 +210,7 @@ module.exports = function(app, userModel) {
                                     return user;
                                 }
                                 else {
-                                    userModel.findAllUsers();
+                                    userModel.FindAll();
                                 }
 
                             },
@@ -329,7 +332,7 @@ module.exports = function(app, userModel) {
         userModel
             .FindById(id)
             .then(function(user){
-                res.json(user[0]);
+                res.json(user);
             });
     }
 
@@ -377,7 +380,7 @@ module.exports = function(app, userModel) {
     }
 
     function isAdmin(req) {
-        var user = req[0];
+        var user = req;
         if(user.roles.indexOf("admin") > -1) {
             return true;
         }

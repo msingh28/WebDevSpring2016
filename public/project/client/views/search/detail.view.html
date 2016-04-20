@@ -39,8 +39,8 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="userReview in userReviews" ng-class="{'success' : $index == selectedFormIndex}">
-                    <td class="bookTitles"><a href="#/profile/{{userReview.userId}}">{{userReview.userName}}</a></td>
-                    <td class="bookTitles">{{userReview.rating}}</td>
+                    <td class="bookTitles"><a href="#/profile/{{userReview.userId}}" class="bookTitles">{{userReview.userName}}</a></td>
+                    <td class="bookTitles ratingReviews">{{userReview.rating}}</td>
                     <td class="bookTitles">{{userReview.comments}}</td>
                     <td>
                         <span class="glyphicon glyphicon-thumbs-up iconButton" ng-click="follow(userReview.userId)"></span>

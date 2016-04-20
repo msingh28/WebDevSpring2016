@@ -1,4 +1,4 @@
-/*@import url(http://fonts.googleapis.com/css?family=Cabin:400);*/
+
 .iconButton {
     cursor: pointer;
     color: black;
@@ -10,9 +10,7 @@
 .table-responsive {
     background: url(../images/tableB.jpg) repeat;
 }
-/*img.displayed {
-    width: 50%;
-}*/
+
 .ratingReviews {
     text-align: right;
 }
@@ -24,7 +22,15 @@
 }
 
 .mainPage{
-    background:url(../images/background2.jpg) repeat center ;
+    background:url(../images/b4.jpg) repeat center ;
+    width:100%;
+    height:200%;
+    display:block;
+    position:relative;
+    background-size: cover;
+}
+.adminView{
+    background:url(../images/b2.jpg) repeat center ;
     width:100%;
     height:200%;
     display:block;
@@ -99,8 +105,9 @@
 .webdesigntuts-workshop:after {
     content: '';
     display: block;
-    height: 1px;
+    height: 0px;
     left: 50%;
+    text-align: center;
     margin: 0 0 0 -400px;
     /*position: absolute;*/
     width: 800px;
@@ -110,10 +117,12 @@
     background: #444;
     background: linear-gradient(left, #151515, #444, #151515);
     top: 192px;
+    text-align: center;
 }
 
 .webdesigntuts-workshop:after {
     background: #000;
+    text-align: center;
     background: linear-gradient(left, #151515, #000, #151515);
     top: 191px;
 }
@@ -130,6 +139,7 @@
     padding: 20px;
     position: relative;
     z-index: 1;
+    text-align: center;
 }
 
 .webdesigntuts-workshop input {

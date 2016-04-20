@@ -33,12 +33,22 @@ module.exports = function(db, mongoose) {
 
     function update(bookId, newReview){
         var deferred = q.defer();
-        delete newReview._id;
+        //delete newReview._id;
         BookModel.findOne({bookId: bookId}, function (err, book) {
             if (err) {
                 deferred.reject(err);
             } else {
-                book.reviews.push(newReview);
+                console.log(book.reviews)
+                var reviews = book.reviews;
+                for(var i = 0; i<reviews.length; i++){
+                    if(reviews[i]._id == newReview._id){
+                        reviews.splice(i, 1);
+                    }
+                }
+                console.log(reviews);
+                reviews.push(newReview);
+                book.reviews = reviews;
+                console.log(book.reviews)
                 book.save(function (err, updatedBook) {
                     if (err) {
                         deferred.reject(err);

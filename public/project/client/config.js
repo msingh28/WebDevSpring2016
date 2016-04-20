@@ -11,6 +11,12 @@
                         loggedin: checkCurrentUser
                     }
                 })
+                .when("/about", {
+                    templateUrl: "views/about/about.view.html",
+                    resolve: {
+                        loggedin: checkLoggedin
+                    }
+                })
                 .when("/register", {
                     templateUrl: "views/users/register.view.html",
                     controller: "RegisterController"
@@ -78,10 +84,10 @@
         {
             $rootScope.errorMessage = null;
             // User is Authenticated
-            if (user !== '0' && user[0].roles.indexOf('admin') != -1)
+            if (user !== '0' && user.roles.indexOf('admin') != -1)
             {
-                console.log(user[0].roles);
-                $rootScope.currentusr = user[0];
+                console.log(user.roles);
+                $rootScope.currentUser = user;
                 deferred.resolve();
             }
         });
@@ -99,7 +105,7 @@
 
             if (user !== '0')
             {
-                $rootScope.currentUser = user[0];
+                $rootScope.currentUser = user;
                 deferred.resolve();
             }
             // User is Not Authenticated
@@ -123,7 +129,8 @@
             // User is Authenticated
             if (user !== '0')
             {
-                $rootScope.currentusr = user[0];
+                console.log(user);
+                $rootScope.currentUser = user;
 
             }
             deferred.resolve();

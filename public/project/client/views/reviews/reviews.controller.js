@@ -45,21 +45,21 @@
 
                 currentReview.rating = $scope.rating;
                 currentReview.comments = $scope.comments;
-                ReviewsService.updateReviewById(currentReview._id, currentReview)
-                    .then(function (response){
-
-                    });
 
                 UserService.updateReview($rootScope.currentUser._id, currentReview)
                     .then(function(response){
-                        console.log(response)
-                        $scope.reviews[$scope.selectedFormIndex] = response.reviews;
+                        console.log(response);
+                       // $scope.reviews[$scope.selectedFormIndex] = response.reviews;
                     })
-
+               ReviewsService.updateReviewById(currentReview._id, currentReview)
+                    .then(function (response){
+                        console.log(response);
+                    });
                 BookService.update(currentReview.bookId, currentReview)
                     .then(function(response){
 
                     })
+
                 currentReview = {};
                 $scope.bookId = null;
                 $scope.rating = null;
