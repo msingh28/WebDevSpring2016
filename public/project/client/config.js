@@ -12,10 +12,7 @@
                     }
                 })
                 .when("/about", {
-                    templateUrl: "views/about/about.view.html",
-                    resolve: {
-                        loggedin: checkLoggedin
-                    }
+                    templateUrl: "views/about/about.view.html"
                 })
                 .when("/register", {
                     templateUrl: "views/users/register.view.html",
