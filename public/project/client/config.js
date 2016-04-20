@@ -42,7 +42,10 @@
                 })
                 .when("/search/:title", {
                     templateUrl: "views/search/search.view.html",
-                    controller: "SearchController"
+                    controller: "SearchController",
+                    resolve: {
+                        loggedin: checkLoggedin
+                    }
                 })
                 .when("/detail/:id", {
                     templateUrl: "views/search/detail.view.html",
