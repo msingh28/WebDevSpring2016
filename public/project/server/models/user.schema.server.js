@@ -11,7 +11,7 @@ module.exports = function(mongoose) {
         roles: [String],
         books: [BookSchema],
         reviews: [ReviewSchema],
-        following: [String]
+        following: [String],
     }, {collection: 'project.nextReadHunt.user'});
 
     return UserSchema;

@@ -8,8 +8,17 @@ module.exports = function(app, reviewModel) {
     app.delete("/api/project/review/:id", deleteReview);
 
     function createReview(req, res) {
-        var review = req.body;
-        res.send(reviewModel.Create(review));
+        console.log(req.body);
+        reviewModel
+            .Create(req.body)
+            .then(
+                function(review){
+                    res.json(review);
+                },
+                function () {
+                    res.status(400).send(err);
+                }
+            )
     }
 
     function getReviews(req, res) {
@@ -25,7 +34,14 @@ module.exports = function(app, reviewModel) {
     function updateReview(req, res) {
         var id = req.params.id;
         var review = req.body;
-        res.json(reviewModel.Update(id, review));
+        reviewModel.Update(id, review)
+            .then(function (review){
+                res.json(review)
+            },
+            function(){
+                res.status(400).send(err);
+            })
+
     }
 
     function deleteReview(req, res) {

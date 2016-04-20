@@ -14,7 +14,9 @@ module.exports = function(db, mongoose) {
         FindById: FindById,
         Delete: Delete,
         findBookByTitle: findBookByTitle,
-        findReviews: findReviews
+        findReviews: findReviews,
+        update: update,
+        FindAllReviews: FindAllReviews
     };
     return api;
 
@@ -41,6 +43,26 @@ module.exports = function(db, mongoose) {
         return deferred.promise;
     }
 
+    function update(bookId, newReview){
+        var deferred = q.defer();
+        delete newReview._id;
+        BookModel.findOne({bookId: bookId}, function (err, book) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                book.reviews.push(newReview);
+                book.save(function (err, updatedBook) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(updatedBook);
+                    }
+                });
+            }
+        });
+        return deferred.promise;
+    }
+
     function FindAll() {
         var deferred = q.defer();
         BookModel.find(function (err, books) {
@@ -57,6 +79,21 @@ module.exports = function(db, mongoose) {
         /*return books;*/
     }
 
+    function FindAllReviews(bookId){
+        var deferred = q.defer();
+        BookModel.findOne({bookId: bookId}, function (err, book) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                console.log("In book model Findall");
+                console.log(book);
+                deferred.resolve(book.reviews);
+            }
+        });
+
+        return deferred.promise;
+    }
+
     /*function FindBooksByUserId(userId){
         /!*var userBooks = [];
         for(var i=0; i < books.length; i++) {
@@ -70,7 +107,7 @@ module.exports = function(db, mongoose) {
 
     function FindById(id) {
         var deferred = q.defer();
-        BookModel.findOne({_id: id}, function (err, book) {
+        BookModel.findOne({bookId: id}, function (err, book) {
             if (err) {
                 deferred.reject(err);
             } else {

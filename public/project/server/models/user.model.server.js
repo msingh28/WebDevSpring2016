@@ -22,7 +22,9 @@ module.exports = function(db, mongoose) {
         updateFollowing: updateFollowing,
         deleteFollowing: deleteFollowing,
         getBooks: getBooks,
-        deleteBook: deleteBook
+        deleteBook: deleteBook,
+        deleteReview: deleteReview,
+        getReviews: getReviews
     };
     return api;
 
@@ -39,7 +41,7 @@ module.exports = function(db, mongoose) {
                         deferred.reject(err);
                     } else {
                         deferred.resolve(user);
-                        /* user.save(function(err, updatedUser) {
+                        /*user.save(function(err, updatedUser) {
                          if(err) {
                          deferred.reject(err);
                          } else {
@@ -76,6 +78,8 @@ module.exports = function(db, mongoose) {
             if (err) {
                 deferred.reject(err);
             } else {
+                console.log("In modal");
+                console.log(user);
                 deferred.resolve(user);
             }
         });
@@ -99,7 +103,7 @@ module.exports = function(db, mongoose) {
 
     function Delete(id) {
         var deferred = q.defer();
-
+console.log("I cam in model to delete user");
         UserModel.remove({_id: id}, function(err, status) {
             if(err) {
                 deferred.reject(err);
@@ -150,21 +154,17 @@ module.exports = function(db, mongoose) {
 
     function Following(userId) {
         var deferred = q.defer();
-        var following = [];
-        UserModel.findOne({_id: userId}, function (err, users) {
+
+        UserModel.find({_id: {$in: userId}}, function (err, users) {
+
             if (err) {
                 deferred.reject(err);
             } else {
-                for(var j=0; j<users.following.length;j++) {
-                    UserModel.findOne({_id: userId}, function (err, user) {
-                        if(err) {
-                            deferred.reject(err);
-                        } else {
-                            following.push(user)
-                        }
-                    });
-                }
-                deferred.resolve(following);
+                var following = [];
+                //console.log(users);
+                var userFollowing = users[0].following;
+               deferred.resolve(userFollowing);
+                //console.log(following);
             }
         });
 
@@ -193,6 +193,34 @@ module.exports = function(db, mongoose) {
                 console.log("In user model");
                 //console.log(users.books);
                 deferred.resolve(users.books);
+            }
+        });
+
+        return deferred.promise;
+
+        /*for(var i = 0; i < users.length; i++) {
+         if(users[i]._id == userId) {
+         for(var j = 0; j< users[i].following.length; j++) {
+         following.push(FindById(users[i].following[j]));
+         }
+         break;
+         }
+         }
+         return following;*/
+    }
+
+    function getReviews(userId) {
+       // console.log("I am inside book model")
+        var deferred = q.defer();
+        //console.log(userId);
+        UserModel.findOne({_id: userId}, function (err, users) {
+            if (err) {
+
+                deferred.reject(err);
+            } else {
+                console.log("In user model");
+                //console.log(users.books);
+                deferred.resolve(users.reviews);
             }
         });
 
@@ -284,6 +312,43 @@ module.exports = function(db, mongoose) {
                 user.books.splice(index, 1);
                 //deferred.resolve(user);
                // user.books = books;
+                user.save(function(err, updatedUser) {
+                    if(err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(updatedUser);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
+        /*var following = [];
+         for(var i = 0; i < users.length; i++) {
+         if(users[i]._id == userId) {
+         following = users[i].following;
+         for (var j = 0; j < following; j++) {
+         if (following[j]._id == followingId) {
+         users[j].following.splice(j, 1);
+         }
+         }
+         }
+         }*/
+    }
+
+    function deleteReview(userId, reviewId) {
+        var deferred = q.defer();
+        var newFollowing=null;
+        UserModel.findOne({_id: userId}, function (err, user) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                //console.log("In delete book");
+                //console.log(user);
+                var index = user.reviews.indexOf(reviewId);
+                user.reviews.splice(index, 1);
+                //deferred.resolve(user);
+                // user.books = books;
                 user.save(function(err, updatedUser) {
                     if(err) {
                         deferred.reject(err);

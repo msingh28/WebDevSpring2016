@@ -7,18 +7,20 @@ module.exports = function(app, userModel) {
     app.post  ('/api/project/login', passport.authenticate('local'), login);
     app.post  ('/api/project/logout',         logout);
     app.post  ('/api/project/register',       register);
-    app.post  ('/api/project/admin/user',     auth, isAdmin, createUser);
+    app.post  ('/api/project/admin/user',     auth, createUser);
     app.get   ('/api/project/loggedin',       loggedin);
-    app.get   ('/api/project/admin/user',     auth, isAdmin, findAllUsers);
-    app.get   ('/api/project/admin/user/:id',     auth, isAdmin, getUserById)
+    app.get   ('/api/project/admin/user',     auth, findAllUsers);
     app.put   ('/api/project/user/:id', auth, updateUser);
-    app.delete('/api/project/admin/user/:id', auth, isAdmin, deleteUser);
+    app.delete('/api/project/admin/user/:id', auth, deleteUser);
     app.get("/api/project/user/:id/following", auth, getFollowing);
     app.put("/api/project/user/:id/following", auth, updateFollowing);
     app.delete("/api/project/user/:id/:followingId", auth, deleteFollowing);
     app.get("/api/project/user/:id/books", getBooks);
+    app.get("/api/project/user/:id/reviews", getReviews);
     app.delete("/api/project/user/:userId/books/:bookId", deleteBookById);
     app.get("/api/project/user/:id", getUserById);
+    app.post("/api/project/user/:userId/review", updateReview);
+    app.delete("/api/project/user/:userId/review/:reviewId", deleteReview);
 
     /*app.post("/api/project/user", createUser);
     app.get("/api/project/user", getUsers);
@@ -128,47 +130,86 @@ module.exports = function(app, userModel) {
             );
     }
 
-    function createUser(req, res) {
+   /* function createUser(req, res) {
         var user = req.body;
         res.send(userModel.Create(user));
-    }
+    }*/
 
     function findAllUsers(req, res) {
         // console.log(req.user);
-        userModel
-            .FindAll()
-            .then(
-                function (users) {
-                    res.json(users);
-                },
-                function () {
-                    res.status(400).send(err);
-                }
-            );
+        if(isAdmin(req.user)) {
+            userModel
+                .FindAll()
+                .then(
+                    function (users) {
+                        res.json(users);
+                    },
+                    function () {
+                        res.status(400).send(err);
+                    }
+                );
+        } else {
+            res.status(403);
+        }
+        /*if(isAdmin(req.user)) {
+            userModel
+                .FindAll()
+                .then(
+                    function (users) {
+                        res.json(users);
+                    },
+                    function () {
+                        res.status(400).send(err);
+                    }
+                );
+        }*/
 
     }
 
     function deleteUser(req, res) {
+        if(isAdmin(req.user)) {
 
-        userModel
-            .removeUser(req.params.id)
-            .then(
-                function(user){
-                    return userModel.findAllUsers();
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            )
-            .then(
-                function(users){
-                    res.json(users);
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            );
-
+            userModel
+                .Delete(req.params.id)
+                .then(
+                    function(user){
+                        return userModel.FindAll();
+                    },
+                    function(err){
+                        res.status(400).send(err);
+                    }
+                )
+                .then(
+                    function(users){
+                        res.json(users);
+                    },
+                    function(err){
+                        res.status(400).send(err);
+                    }
+                );
+        } else {
+            res.status(403);
+        }
+        /*if(isAdmin(req.user)) {
+            userModel
+                .Delete(req.params.id)
+                .then(
+                    function (user) {
+                        return userModel.findAllUsers();
+                    },
+                    function (err) {
+                        res.status(400).send(err);
+                    }
+                )
+                .then(
+                    function (users) {
+                        res.json(users);
+                    },
+                    function (err) {
+                        res.status(400).send(err);
+                    }
+                );
+        }*/
     }
 
     function updateUser(req, res) {
@@ -204,9 +245,71 @@ module.exports = function(app, userModel) {
             );
     }
 
+    function updateReview(req, res){
+        var newreview = req.body;
+    userModel.FindById(user._id)
+            .then(
+                function(user){
+                    var index = user.indexOf(newreview._id);
+                    user.reviews.splice(index, 1);
+                    user.reviews.push(newreview);
+                    res.json(user);
+
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
+    }
+
     function getFollowing(req, res) {
         var userId = req.params.id;
-        res.json(userModel.Following(userId));
+        console.log(userId);
+
+        userModel.Following(userId)
+            .then(
+                function (following){
+                    var followingUsers=[];
+                    console.log("model following response")
+                    console.log(following);
+                    var temp=[];
+                    for(var i =0; i <following.length; i++){
+                        console.log(following[i]);
+                        userModel.FindById(following[i])
+                            .then(
+                                function (user){
+                                   //console.log(user);
+                                    temp.push(user);
+                                    followingUsers = temp;
+                                   // console.log("in for");
+                                   //console.log(followingUsers);
+                                },
+                                function(err){
+                                    res.status(400).send(err);
+                                }
+                            );
+                    }
+                    console.log(followingUsers);
+                    res.json(followingUsers);
+                },
+                function () {
+                    res.status(400).send(err);
+                }
+            )
+        //console.log(followingUsers);
+       // res.json(followingUsers);
+        /*.then(
+            function(){
+                console.log(followingUsers);
+                console.log(res.json(followingUsers));
+                //return followingUsers;
+                res.json(followingUsers);
+            },
+            function(err){
+                res.status(400).send(err);
+            }
+        );*/
+        //res.json(userModel.Following(userId));
     }
 
     function updateFollowing(req, res) {
@@ -238,6 +341,21 @@ module.exports = function(app, userModel) {
         //res.json(userModel.getBooks(userId));
     }
 
+    function getReviews(req, res) {
+        var userId = req.params.id;
+        userModel.getReviews(userId)
+            .then(
+                function(reviews){
+                    //console.log(books);
+                    res.json(reviews)
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
+        //res.json(userModel.getBooks(userId));
+    }
+
     function deleteBookById(req, res) {
         var userId = req.params.userId;
         var bookId = req.params.bookId;
@@ -246,6 +364,20 @@ module.exports = function(app, userModel) {
                 function(books){
                     console.log(books);
                     res.json(books)
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
+    }
+
+    function deleteReview(req, res) {
+        var userId = req.params.userId;
+        var reviewId = req.params.reviewId;
+        userModel.deleteReview(userId, reviewId)
+            .then(
+                function(review){
+                    res.json(review);
                 },
                 function(err){
                     res.status(400).send(err);
@@ -275,6 +407,8 @@ module.exports = function(app, userModel) {
         userModel
             .FindById(id)
             .then(function(user){
+                console.log("In get User by Id");
+                console.log(user);
                 res.json(user[0]);
             });
     }
@@ -284,9 +418,9 @@ module.exports = function(app, userModel) {
         if(newUser.roles && newUser.roles.length > 1) {
             newUser.roles = newUser.roles.split(",");
         } else {
-            newUser.roles = ["student"];
+            newUser.roles = ["user"];
         }
-
+        console.log("In create user");
         // first check if a user already exists with the username
         userModel
             .findUserByUsername(newUser.username)
@@ -299,7 +433,7 @@ module.exports = function(app, userModel) {
                             .then(
                                 // fetch all the users
                                 function(){
-                                    return userModel.findAllUsers();
+                                    return userModel.FindAll();
                                 },
                                 function(err){
                                     res.status(400).send(err);
@@ -307,7 +441,7 @@ module.exports = function(app, userModel) {
                             );
                         // if the user already exists, then just fetch all the users
                     } else {
-                        return userModel.findAllUsers();
+                        return userModel.FindAll();
                     }
                 },
                 function(err){
@@ -321,7 +455,51 @@ module.exports = function(app, userModel) {
                 function(){
                     res.status(400).send(err);
                 }
-            )
+            );
+        /*if(isAdmin(req.user)) {
+            var newUser = req.body;
+            if (newUser.roles && newUser.roles.length > 1) {
+                newUser.roles = newUser.roles.split(",");
+            } else {
+                newUser.roles = ["user"];
+            }
+
+            // first check if a user already exists with the username
+            userModel
+                .findUserByUsername(newUser.username)
+                .then(
+                    function (user) {
+                        // if the user does not already exist
+                        if (user == null) {
+                            // create a new user
+                            return userModel.Create(newUser)
+                                .then(
+                                    // fetch all the users
+                                    function () {
+                                        return userModel.findAllUsers();
+                                    },
+                                    function (err) {
+                                        res.status(400).send(err);
+                                    }
+                                );
+                            // if the user already exists, then just fetch all the users
+                        } else {
+                            return userModel.findAllUsers();
+                        }
+                    },
+                    function (err) {
+                        res.status(400).send(err);
+                    }
+                )
+                .then(
+                    function (users) {
+                        res.json(users);
+                    },
+                    function () {
+                        res.status(400).send(err);
+                    }
+                )
+        }*/
     }
 
     /*function updateUser(req, res) {
@@ -335,16 +513,17 @@ module.exports = function(app, userModel) {
         res.json(userModel.Delete(id));
     }*/
 
-    function isAdmin(req, res, next) {
+    function isAdmin(req) {
         // console.log(user[0].roles);
-        var user = req.user;
-        console.log("in user service");
-        console.log(req.user);
-        if(user[0].roles.indexOf("admin") > -1) {
-            next();
+        ///console.log(req);
+        var user = req[0];
+        //console.log("in user service");
+
+        if(user.roles.indexOf("admin") > -1) {
+            return true;
         }
         else{
-            res.send(403);
+            return false;
         }
     }
 

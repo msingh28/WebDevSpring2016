@@ -2,10 +2,10 @@
 <br>
 <nav ng-controller="NavController">
     <ul class="nav nav-tabs topNavButtons">
-        <li ng-class="{'active': $location.url() == '/profile'}"><a href="#/profile">Profile</a></li>
-        <li ng-class="{'active': $location.url() == '/books'}"><a href="#/books">Books</a></li>
-        <li ng-class="{'active': $location.url() == '/following'}"><a href="#/following">Following</a></li>
-        <li ng-class="{'active': $location.url() == '/reviews'}"><a href="#/reviews">Reviews</a></li>
+        <li ng-class="{'active': $location.url() == '/profile'}"><a href="#/profile/{{currentUser._id}}">Profile</a></li>
+        <li ng-class="{'active': $location.url() == '/books'}"><a href="#/books/{{currentUser._id}}">Books</a></li>
+        <li ng-class="{'active': $location.url() == '/following'}"><a href="#/following/{{currentUser._id}}">Following</a></li>
+        <li ng-class="{'active': $location.url() == '/reviews'}"><a href="#/reviews/{{currentUser._id}}">Reviews</a></li>
     </ul>
 </nav>
 <br>
@@ -17,16 +17,12 @@
                 <th class="columnHeading">User Name</th>
                 <th class="columnHeading">Action</th>
             </tr>
-            <tr>
-                <td><div class="input-group"><input type="text" ng-model="followerId" class="form-control"  placeholder="name"></div></td>
-                <td><span ng-class="disable ? 'glyphicon glyphicon-plus iconButton' :  'glyphicon glyphicon-plus link-disable iconButton'" ng-click="disable && addFollower()"></span>
-            </tr>
             </thead>
             <tbody>
             <tr ng-repeat="user in following" ng-class="{'success' : $index == selectedFormIndex}">
-                <td>{{user.username}}</td>
+                <td class="bookTitles"><a href="#/profile/{{user.userId}}">{{user.username}}</a></td>
                 <td>
-                    <span class="glyphicon glyphicon-remove iconButton" ng-click="deleteFollower($index)"></span>
+                    <span ng-disabled="currentuser!=currentUser" class="glyphicon glyphicon-thumbs-down iconButton" ng-click="deleteFollower($index)"></span>
                 </td>
             </tr>
             </tbody>

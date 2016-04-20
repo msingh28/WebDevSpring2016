@@ -13,7 +13,7 @@
                     .then(function(response){
                         $rootScope.currentUser = response;
                         //console.log(response);
-                        $location.url('/profile');
+                        $location.url('/profile/'+$rootScope.currentUser._id);
                     },
                         function(err) {
                             $scope.error = err;

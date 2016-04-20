@@ -13,15 +13,15 @@
                 })
                 .when("/register", {
                     templateUrl: "views/users/register.view.html",
-                    controller: "RegisterController",
-                    controllerAs: 'model'
+                    controller: "RegisterController"
+                    //controllerAs: 'model'
                 })
                 .when("/login", {
                     templateUrl: "views/users/login.view.html",
-                    controller: "LoginController",
-                    controllerAs: 'model'
+                    controller: "LoginController"
+                   // controllerAs: 'model'
                 })
-                .when("/profile", {
+                .when("/profile/:userId", {
                     templateUrl: "views/users/profile.view.html",
                     controller: "ProfileController",
                     resolve: {
@@ -47,21 +47,21 @@
                     templateUrl: "views/search/detail.view.html",
                     controller: "DetailController"
                 })
-                .when("/books", {
+                .when("/books/:userId", {
                     templateUrl: "views/books/books.view.html",
                     controller: "BooksController",
                     resolve: {
                         loggedin: checkLoggedin
                     }
                 })
-                .when("/following", {
+                .when("/following/:userId", {
                     templateUrl: "views/following/following.view.html",
                     controller: "FollowingController",
                     resolve: {
                         loggedin: checkLoggedin
                     }
                 })
-                .when("/reviews", {
+                .when("/reviews/:userId", {
                     templateUrl: "views/reviews/reviews.view.html",
                     controller: "ReviewsController",
                     resolve: {
@@ -82,6 +82,7 @@
             // User is Authenticated
             if (user !== '0' && user[0].roles.indexOf('admin') != -1)
             {
+                console.log(user[0].roles);
                 $rootScope.currentusr = user[0];
                 deferred.resolve();
             }

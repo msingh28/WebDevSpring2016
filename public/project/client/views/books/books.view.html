@@ -2,10 +2,10 @@
 <br>
 <nav ng-controller="NavController">
     <ul class="nav nav-tabs topNavButtons">
-        <li ng-class="{'active': $location.url() == '/profile'}"><a href="#/profile">Profile</a></li>
-        <li ng-class="{'active': $location.url() == '/books'}"><a href="#/books">Books</a></li>
-        <li ng-class="{'active': $location.url() == '/following'}"><a href="#/following">Following</a></li>
-        <li ng-class="{'active': $location.url() == '/reviews'}"><a href="#/reviews">Reviews</a></li>
+        <li ng-class="{'active': $location.url() == '/profile'}"><a href="#/profile/{{currentUser._id}}">Profile</a></li>
+        <li ng-class="{'active': $location.url() == '/books'}"><a href="#/books/{{currentUser._id}}">Books</a></li>
+        <li ng-class="{'active': $location.url() == '/following'}"><a href="#/following/{{currentUser._id}}">Following</a></li>
+        <li ng-class="{'active': $location.url() == '/reviews'}"><a href="#/reviews/{{currentUser._id}}">Reviews</a></li>
     </ul>
 </nav>
 <br>
@@ -26,7 +26,7 @@
                 <td class="bookTitles">{{book.title}}</td>
                 <td class="bookTitles">{{book.authors.toString()}}</td>
                 <td>
-                    <span class="glyphicon glyphicon-remove iconButton" ng-click="deleteBook(book._id)"></span>
+                    <span ng-disabled="currentuser!=currentUser" class="glyphicon glyphicon-remove iconButton" ng-click="deleteBook(book._id)"></span>
                 </td>
             </tr>
             </tbody>

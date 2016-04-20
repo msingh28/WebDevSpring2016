@@ -1,28 +1,43 @@
 "use strict";
 
 var uuid = require('node-uuid');
-
+var q = require("q");
 module.exports = function(db, mongoose) {
 
-    var BookSchema = require("./book.schema.server.js")(mongoose);
-    var ReviwModel  = mongoose.model("ReviewModel", BookSchema);
+    var ReviewSchema = require("./review.schema.server.js")(mongoose);
+    var ReviwModel  = mongoose.model("ReviewModel", ReviewSchema);
 
     var api = {
         Create: Create,
-        //FindAll: FindAll,
+        FindAll: FindAll,
         //FindById: FindById,
         //Update: Update,
         Delete: Delete
     };
     return api;
 
-    function Create(bookId, review) {
+    function Create(review) {
         var deferred = q.defer();
-        if(review._id){
+        ReviwModel.create(review, function(err, review) {
+            if(err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(review);
+                /* user.save(function(err, updatedUser) {
+                 if(err) {
+                 deferred.reject(err);
+                 } else {
+                 deferred.resolve(updatedUser);
+                 }
+                 });*/
+            }
+        });
+        return deferred.promise;
+       /* if(review._id){
             delete review._id;
         }
-
-        ReviwModel.findById({_id : bookId}, function(err, book){
+*/
+       /* ReviwModel.findById({_id : bookId}, function(err, book){
             if(err){
                 deferred.reject(err);
             }else{
@@ -41,13 +56,13 @@ module.exports = function(db, mongoose) {
                 });
             }
         });
-        return deferred.promise;
+        return deferred.promise;*/
         /*review._id = uuid.v1();
         reviews.push(review);
         return review;*/
     }
 
-    /*function FindAll(userId) {
+    function FindAll(userId) {
         var deferred = q.defer();
 
         ReviwModel.findById({userId: userId}, function (err, reviws) {
@@ -58,7 +73,7 @@ module.exports = function(db, mongoose) {
             }
         });
         return deferred.promise;
-    }*/
+    }
 
     /*function FindById(id) {
         var review=null;
@@ -107,11 +122,22 @@ module.exports = function(db, mongoose) {
     }*/
 
     function Delete(id) {
-        for (var i = 0; i < reviews.length; i++) {
-            if (reviews[i]._id == id) {
-                reviews.splice(i, 1);
+        var deferred = q.defer();
+
+        ReviwModel.remove({_id: id}, function(err, status) {
+            if(err) {
+                deferred.reject(err);
+            } else {
+                status.save(function(err, updatedUser) {
+                    if(err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(updatedUser);
+                    }
+                });
             }
-        }
-        return reviews;
+        });
+
+        return deferred.promise;
     }
 }

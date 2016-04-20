@@ -1,13 +1,14 @@
 /*@import url(http://fonts.googleapis.com/css?family=Cabin:400);*/
 .iconButton {
     cursor: pointer;
-    text-align:center;
+    color: black;
+    font-size: 200%;
 }
 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
     background-color: whitesmoke;
 }
 .table-responsive {
-    background: url(../images/tableBackground.png) repeat;
+    background: url(../images/tableB.jpg) repeat;
 }
 /*img.displayed {
     width: 50%;
@@ -18,7 +19,9 @@
 .table, th, td, thead tr{
     border: 5px solid black;
 }
-
+.adminStyle{
+    color: whitesmoke;
+}
 
 .mainPage{
     background:url(../images/background2.jpg) repeat center ;

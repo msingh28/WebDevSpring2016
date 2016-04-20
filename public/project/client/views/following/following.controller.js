@@ -6,15 +6,43 @@
         .module("NextReadHuntApp")
         .controller("FollowingController", FollowingController);
 
-    function FollowingController($rootScope, $scope, UserService) {
+    function FollowingController($routeParams, $rootScope, $scope, UserService) {
         $scope.following = [];
+        var targetProfileId = $routeParams.userId;
+        if($rootScope.currentUser){
+            if($rootScope.currentUser._id == targetProfileId){
+                $scope.currentuser = $rootScope.currentUser;
+                $scope.disableProfile = false;
+                UserService.findAllFollowing($rootScope.currentUser._id)
+                    .then(function (response) {
+                        console.log(response);
+                        $scope.following = response;
+                    });
 
-        if($rootScope.currentUser != null) {
+            }else {
+                UserService.findUserById(targetProfileId)
+                    .then(function (response) {
+                        console.log(response);
+                        $scope.currentuser = response;
+                    })
+                    .then(function (response) {
+                        UserService.findAllFollowing($scope.currentuser._id)
+                            .then(function (response) {
+                                console.log(response);
+                                $scope.following = response;
+                            });
+                    });
+            }
+
+        }
+
+        /*if($rootScope.currentUser != null) {
             UserService.findAllFollowing($rootScope.currentUser._id)
                 .then(function (response) {
+                    console.log(response);
                     $scope.following = response;
                 });
-        }
+        }*/
 
         $scope.selectedFormIndex = null;
         $scope.disable = true;

@@ -20,7 +20,10 @@
             deleteFollowingById: deleteFollowingById,
             findAllBooks: findAllBooks,
             deleteBookById: deleteBookById,
-            findUserById: findUserById
+            findUserById: findUserById,
+            updateReview: updateReview,
+            deleteReviewById: deleteReviewById,
+            findAllReviewsForUser: findAllReviewsForUser
             /*findAllUsers: findAllUsers,
             findUserByCredentials: findUserByCredentials,
             createUser: createUser,
@@ -62,10 +65,19 @@
             return deferred.promise;
         }
 
+        function updateReview(userId, review){
+            var deferred = $q.defer();
+            $http.post("/api/project/user/"+ userId+"/review", review)
+                .success(function(response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
+
 
         function findAllUsers() {
             var deferred = $q.defer();
-            $http.get("/api/project/user")
+            $http.get("/api/project/admin/user")
                 .success(function (response) {
                     deferred.resolve(response);
                 });
@@ -83,7 +95,7 @@
 
         function createUser(user) {
             var deferred = $q.defer();
-            $http.post("/api/project/user", user)
+            $http.post("/api/project/admin/user", user)
                 .success(function (response) {
                     deferred.resolve(response);
                 });
@@ -92,7 +104,15 @@
 
         function deleteUserById(userId) {
             var deferred = $q.defer();
-            $http.delete("/api/project/user/" + userId)
+            $http.delete("/api/project/admin/user/" + userId)
+                .success(function (response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
+        function deleteReviewById(reviewId, userId) {
+            var deferred = $q.defer();
+            $http.delete("/api/project/user/"+ userId+"/review/"+reviewId)
                 .success(function (response) {
                     deferred.resolve(response);
                 });
@@ -130,6 +150,7 @@
             var deferred = $q.defer();
             $http.get("/api/project/user/" + userId + "/following")
                 .success(function (response) {
+                    console.log(response)
                     deferred.resolve(response);
                 });
             return deferred.promise;
@@ -160,8 +181,15 @@
             var deferred = $q.defer();
             $http.get("/api/project/user/"+ userId+"/books")
                 .success(function (response) {
-                    console.log("In client services");
-                    console.log(response);
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
+
+        function findAllReviewsForUser(userId) {
+            var deferred = $q.defer();
+            $http.get("/api/project/user/"+ userId+"/reviews")
+                .success(function (response) {
                     deferred.resolve(response);
                 });
             return deferred.promise;

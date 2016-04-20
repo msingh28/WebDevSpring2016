@@ -18,7 +18,7 @@
                         console.log(user);
                         if (user != null) {
                             $rootScope.currentUser = response;
-                            $location.path('/profile');
+                            $location.path('/profile/'+$rootScope.currentUser._id);
                         }
 
                     },

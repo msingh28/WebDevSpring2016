@@ -28,13 +28,28 @@
     <hr>
     <div class="elementPadding pageDetails">
         Reviews:
-        <ul>
-            <li ng-repeat="review in reviews">
-                <span>{{review.username}}&nbs&nbs&nbs&nbs&nbs{{review.rating}}</span>
-                <span>{{review.comments}}</span>
-                <button type="submit" ng-click="follow(review.userId)" class="btn btn-default ">Follow</Button>
-            </li>
-        </ul>
+        <div class="table-responsive">
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th class="columnHeading">UserName</th>
+                    <th class="columnHeading">Rating</th>
+                    <th class="columnHeading">Review</th>
+                    <th class="columnHeading">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="userReview in userReviews" ng-class="{'success' : $index == selectedFormIndex}">
+                    <td class="bookTitles"><a href="#/profile/{{userReview.userId}}">{{userReview.userName}}</a></td>
+                    <td class="bookTitles">{{userReview.rating}}</td>
+                    <td class="bookTitles">{{userReview.comments}}</td>
+                    <td>
+                        <span class="glyphicon glyphicon-thumbs-up iconButton" ng-click="follow(userReview.userId)"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <div id="myReview" class="modal fade" role="dialog">
@@ -46,17 +61,23 @@
         <h4 class="modal-title">Review</h4>
     </div>
     <div class="modal-body">
-        <label class="col-sm-2 control-label">Rating: </label>
+        <div class="form-horizontal" role="form">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Rating: </label>
         <div class="col-sm-10">
             <input type="text" class="form-control"  ng-model="review.rating">
         </div>
+            </div>
+            <div class="form-group">
         <label class="col-sm-2 control-label">Comments: </label>
         <div class="col-sm-10">
             <input type="text" class="form-control"  ng-model="review.comments">
         </div>
+            </div>
+            </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="addUserReview(review, book.bookId)">Submit</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="addUserReview(review, book)">Submit</button>
     </div>
 </div>
 

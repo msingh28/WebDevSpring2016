@@ -8,15 +8,16 @@
     function ReviewsService($http, $q) {
 
         var service = {
-            createReviewForUser: createReviewForUser,
+            addReview: addReview,
             findAllReviewsForUser: findAllReviewsForUser,
             deleteReviewById: deleteReviewById,
-            updateReviewById: updateReviewById
+            updateReviewById: updateReviewById,
+
         };
 
         return service;
 
-        function createReviewForUser(review) {
+        function addReview(review) {
             var deferred = $q.defer();
             $http.post("/api/project/review", review)
                 .success(function (response) {
