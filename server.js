@@ -27,9 +27,6 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
 //var dbFormMaker = mongoose.createConnection(connectionStringFormMaker);
 var dbNextReadHunt = mongoose.connect(connectionStringNextReadHunt);
 //console.log(dbNextReadHunt);
-
-
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
