@@ -20,8 +20,12 @@
         }
 
         $scope.addForm = function() {
-            if($scope.formName!=null) {
+            if($scope.formName == null) {
+                currentForm.title = "NewForm";
+            }
+            else{
                 currentForm.title = $scope.formName;
+            }
                 FormService.createFormForUser($rootScope.currentUser._id, currentForm)
                     .then(function(response){
                         $scope.forms.push(response);
@@ -29,7 +33,7 @@
                 $scope.formName = null;
                 currentForm = {};
             }
-        }
+
 
         $scope.updateForm = function() {
             if($scope.formName!=null) {
