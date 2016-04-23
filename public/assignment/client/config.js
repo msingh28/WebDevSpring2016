@@ -63,7 +63,8 @@
             // User is Authenticated
             if (user !== '0' && user[0].roles.indexOf('admin') != -1)
             {
-                $rootScope.currentusr = user;
+                $rootScope.currentUser = user[0];
+                console.log(user[0]);
                 deferred.resolve();
             }
         });
@@ -82,7 +83,8 @@
             // User is Authenticated
             if (user !== '0')
             {
-                $rootScope.currentusr = user;
+                $rootScope.currentUser = user[0];
+                console.log(user[0]);
                 deferred.resolve();
             }
             // User is Not Authenticated
@@ -107,7 +109,9 @@
             // User is Authenticated
             if (user !== '0')
             {
-                $rootScope.currentusr = user;
+
+                $rootScope.currentUser = user[0];
+                console.log(user[0]);
 
             }
             deferred.resolve();

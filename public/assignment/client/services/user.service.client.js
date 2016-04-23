@@ -14,13 +14,8 @@
             findAllUsers: findAllUsers,
             deleteUser: deleteUser,
             updateUser: updateUser,
-            createUser: createUser
-            /*findAllUsers : findAllUsers,
-            findUserByCredentials:findUserByCredentials,
-            createUser : createUser,
-            deleteUserById : deleteUserById,
-            updateUser : updateUser,
-            findUserByUsername: findUserByUsername*/
+            createUser: createUser,
+            adminUpdateUser: adminUpdateUser
         };
 
         return service;
@@ -92,6 +87,15 @@
         function updateUser(userId, user) {
             var deferred = $q.defer();
             $http.put("/api/assignment/user/"+userId, user)
+                .success(function(response){
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
+
+        function adminUpdateUser(userId, user) {
+            var deferred = $q.defer();
+            $http.put("/api/assignment/admin/user/"+userId, user)
                 .success(function(response){
                     deferred.resolve(response);
                 });
