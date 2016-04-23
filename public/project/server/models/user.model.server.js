@@ -77,11 +77,31 @@ module.exports = function(db, mongoose) {
     function Update(id, user) {
         var deferred = q.defer();
         delete user._id;
-        UserModel.update({_id: id}, {$set: user}, function(err, user) {
-            if(err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(user);
+        UserModel.findOne({_id:id}, function(err, oldUser) {
+            if(oldUser.password == user.password){
+                UserModel.update({_id: id}, {$set: user}, function(err, user) {
+                    if(err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(user);
+                    }
+                });
+            }
+            else{
+                bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+                    if (err) return deferred.promise;
+                    bcrypt.hash(user.password, salt, function (err, hash) {
+                        if (err) return deferred.promise;
+                        user.password = hash;
+                        UserModel.update({_id: id}, {$set: user}, function(err, user) {
+                            if(err) {
+                                deferred.reject(err);
+                            } else {
+                                deferred.resolve(user);
+                            }
+                        });
+                    });
+                });
             }
         });
         return deferred.promise;
